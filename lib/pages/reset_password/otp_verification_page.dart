@@ -278,28 +278,27 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                 ? RichText(
                     text: TextSpan(
                       style: TextStyle(
-                        // Default style for the entire text
                         fontSize: 14,
                         color: Theme.of(context).colorScheme.tertiary,
                         fontWeight: FontWeight.normal,
                       ),
                       children: <TextSpan>[
-                        const TextSpan(text: "Resend Code in "), // Regular text
+                        const TextSpan(text: "Resend Code in "), 
                         TextSpan(
                           text:
-                              "$_remainingTime s", // Text to be styled uniquely
+                              "$_remainingTime s", 
                           style: TextStyle(
                               fontWeight: FontWeight
-                                  .bold, // Make the countdown number bold
+                                  .bold, 
                               color: Theme.of(context).colorScheme.secondary,
                               fontSize:
-                                  20, // Increase the font size for the countdown number
+                                  20, 
                               shadows: [
                                 Shadow(
                                   offset: const Offset(1, 1),
                                   blurRadius: 3,
                                   color: Colors.black.withOpacity(0.5),
-                                ) // Optional shadow for better visibility
+                                ) 
                               ]),
                         ),
                       ],
