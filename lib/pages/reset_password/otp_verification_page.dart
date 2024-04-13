@@ -42,6 +42,31 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
     _timer?.cancel();
   }
 
+  InputDecoration buildInputDecoration(BuildContext context) {
+    return InputDecoration(
+      contentPadding: const EdgeInsets.symmetric(vertical: 26),
+      hintStyle: TextStyle(
+        color: Theme.of(context).colorScheme.tertiary,
+        fontSize: 12,
+        fontWeight: FontWeight.w100,
+      ),
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      filled: true,
+      fillColor: Colors.white,
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(
+          color: Theme.of(context).colorScheme.primary,
+          width: 1,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,33 +113,7 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                         fontSize: 20,
                       ),
                       textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 26,
-                        ),
-                        hintStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.tertiary,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w100,
-                        ),
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide:
-                              BorderSide.none, // No border when not focused
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary, // Border color when the TextField is focused
-                            width: 1,
-                          ),
-                        ),
-                      ),
+                      decoration: buildInputDecoration(context),
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(1),
@@ -138,33 +137,8 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                         color: Theme.of(context).colorScheme.secondary,
                         fontSize: 20,
                       ),
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 26,
-                        ),
-                        hintStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.tertiary,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w100,
-                        ),
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide:
-                              BorderSide.none, // No border when not focused
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary, // Border color when the TextField is focused
-                            width: 1,
-                          ),
-                        ),
-                      ),
+                      decoration: buildInputDecoration(context),
+
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(1),
@@ -189,33 +163,7 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                         color: Theme.of(context).colorScheme.secondary,
                         fontSize: 20,
                       ),
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 26,
-                        ),
-                        hintStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.tertiary,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w100,
-                        ),
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide:
-                              BorderSide.none, // No border when not focused
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary, // Border color when the TextField is focused
-                            width: 1,
-                          ),
-                        ),
-                      ),
+                      decoration: buildInputDecoration(context),
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(1),
@@ -240,33 +188,8 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                         color: Theme.of(context).colorScheme.secondary,
                         fontSize: 20,
                       ),
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 26,
-                        ),
-                        hintStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.tertiary,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w100,
-                        ),
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide:
-                              BorderSide.none, // No border when not focused
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary, // Border color when the TextField is focused
-                            width: 1,
-                          ),
-                        ),
-                      ),
+                      decoration: buildInputDecoration(context),
+
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(1),
