@@ -64,7 +64,7 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
           children: [
             Text("Code has been Send to ${widget.value}"),
             const SizedBox(
-              height: 30,
+              height: 50,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -274,6 +274,9 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                 ),
               ],
             ),
+            const SizedBox(
+              height: 50,
+            ),
             _remainingTime > 0
                 ? RichText(
                     text: TextSpan(
@@ -283,22 +286,19 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                         fontWeight: FontWeight.normal,
                       ),
                       children: <TextSpan>[
-                        const TextSpan(text: "Resend Code in "), 
+                        const TextSpan(text: "Resend Code in "),
                         TextSpan(
-                          text:
-                              "$_remainingTime s", 
+                          text: "$_remainingTime s",
                           style: TextStyle(
-                              fontWeight: FontWeight
-                                  .bold, 
+                              fontWeight: FontWeight.bold,
                               color: Theme.of(context).colorScheme.secondary,
-                              fontSize:
-                                  20, 
+                              fontSize: 20,
                               shadows: [
                                 Shadow(
                                   offset: const Offset(1, 1),
                                   blurRadius: 3,
                                   color: Colors.black.withOpacity(0.5),
-                                ) 
+                                )
                               ]),
                         ),
                       ],
