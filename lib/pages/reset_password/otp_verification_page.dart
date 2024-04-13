@@ -44,19 +44,19 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.background,
-          title: Text(
-            "Forgot Password",
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.secondary,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        title: Text(
+          "Forgot Password",
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
-        body: SafeArea(
+      ),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: SafeArea(
             child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 100,
