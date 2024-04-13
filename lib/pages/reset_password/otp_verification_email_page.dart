@@ -36,6 +36,8 @@ class OTPVerificationPage extends StatelessWidget {
                   height: 68,
                   width: 64,
                   child: TextField(
+                    // move cursor to next text field
+
                     onChanged: (value) {
                       if (value.length == 1) {
                         FocusScope.of(context).nextFocus();
@@ -125,6 +127,8 @@ class OTPVerificationPage extends StatelessWidget {
                   height: 68,
                   width: 64,
                   child: TextField(
+                    // move cursor to next text field
+
                     onChanged: (value) {
                       if (value.length == 1) {
                         FocusScope.of(context).nextFocus();
@@ -169,6 +173,8 @@ class OTPVerificationPage extends StatelessWidget {
                   height: 68,
                   width: 64,
                   child: TextField(
+                    // move cursor to next text field
+
                     onChanged: (value) {
                       if (value.length == 1) {
                         FocusScope.of(context).nextFocus();
