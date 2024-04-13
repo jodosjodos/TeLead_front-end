@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:te_lead/pages/reset_password/otp_verification_email_page.dart';
+import 'package:te_lead/pages/reset_password/otp_verification_page.dart';
 
 class ResetPasswordLanding extends StatefulWidget {
   const ResetPasswordLanding({super.key});
