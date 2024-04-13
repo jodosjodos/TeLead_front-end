@@ -94,6 +94,11 @@ class OTPVerificationPage extends StatelessWidget {
                       }
                     },
                     textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 20,
+                    ),
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                         vertical: 26,
@@ -140,6 +145,11 @@ class OTPVerificationPage extends StatelessWidget {
                       }
                     },
                     textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 20,
+                    ),
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                         vertical: 26,
@@ -186,6 +196,11 @@ class OTPVerificationPage extends StatelessWidget {
                       }
                     },
                     textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 20,
+                    ),
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                         vertical: 26,
