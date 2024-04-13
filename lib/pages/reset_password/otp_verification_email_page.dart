@@ -43,6 +43,11 @@ class OTPVerificationPage extends StatelessWidget {
                         FocusScope.of(context).nextFocus();
                       }
                     },
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 20,
+                    ),
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
