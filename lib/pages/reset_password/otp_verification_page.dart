@@ -25,9 +25,12 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
       const Duration(seconds: 1),
       (timer) {
         if (_remainingTime > 0) {
-          _remainingTime--;
+          setState(() {
+            _remainingTime--;
+          });
         } else {
-          _timer?.cancel();
+          timer.cancel();
+          setState(() {}); // Ensure UI updates when timer hits 0
         }
       },
     );
@@ -272,14 +275,47 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
               ],
             ),
             _remainingTime > 0
-                ? Text("Code has been Send to $_remainingTime")
+                ? RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        // Default style for the entire text
+                        fontSize: 14,
+                        color: Theme.of(context).colorScheme.tertiary,
+                        fontWeight: FontWeight.normal,
+                      ),
+                      children: <TextSpan>[
+                        const TextSpan(text: "Resend Code in "), // Regular text
+                        TextSpan(
+                          text:
+                              "$_remainingTime s", // Text to be styled uniquely
+                          style: TextStyle(
+                              fontWeight: FontWeight
+                                  .bold, // Make the countdown number bold
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontSize:
+                                  20, // Increase the font size for the countdown number
+                              shadows: [
+                                Shadow(
+                                  offset: const Offset(1, 1),
+                                  blurRadius: 3,
+                                  color: Colors.black.withOpacity(0.5),
+                                ) // Optional shadow for better visibility
+                              ]),
+                        ),
+                      ],
+                    ),
+                  )
                 : ElevatedButton(
                     onPressed: () {
-                      // resend OTP
+                      if (_remainingTime == 0) {
+                        setState(() {
+                          _remainingTime = 60; // Reset the timer
+                          _timer?.cancel(); // Cancel existing timer if any
+                          startTimer(); // Start the timer anew
+                        });
+                      }
                     },
-                    child: const Text(
-                      "resend OTP ",
-                    ),
+                    child: const Text("Resend OTP"),
                   ),
           ],
         ),
