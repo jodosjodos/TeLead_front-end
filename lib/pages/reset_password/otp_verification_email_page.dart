@@ -17,6 +17,7 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
   @override
   void initState() {
     super.initState();
+    startTimer();
   }
 
   void startTimer() {
