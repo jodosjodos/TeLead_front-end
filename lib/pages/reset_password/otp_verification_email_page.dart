@@ -1,9 +1,42 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class OTPVerificationPage extends StatelessWidget {
+class OTPVerificationPage extends StatefulWidget {
   const OTPVerificationPage({super.key, required this.value});
   final String value;
+
+  @override
+  State<OTPVerificationPage> createState() => _OTPVerificationPageState();
+}
+
+class _OTPVerificationPageState extends State<OTPVerificationPage> {
+  Timer? _timer;
+  int _remainingTime = 60;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void startTimer() {
+    _timer = Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        if (_remainingTime > 0) {
+          _remainingTime--;
+        } else {
+          _timer?.cancel();
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer?.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +58,7 @@ class OTPVerificationPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Code has been Send to $value"),
+            Text("Code has been Send to ${widget.value}"),
             const SizedBox(
               height: 30,
             ),
@@ -236,7 +269,17 @@ class OTPVerificationPage extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
+            _remainingTime > 0
+                ? Text("Code has been Send to $_remainingTime")
+                : ElevatedButton(
+                    onPressed: () {
+                      // resend OTP
+                    },
+                    child: const Text(
+                      "resend OTP ",
+                    ),
+                  ),
           ],
         ),
       )),
