@@ -44,323 +44,327 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        title: Text(
-          "Forgot Password",
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.secondary,
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          title: Text(
+            "Forgot Password",
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.secondary,
+            ),
           ),
         ),
-      ),
-      body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 100,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text("Code has been Send to ${widget.value}"),
-            const SizedBox(
-              height: 50,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                  height: 68,
-                  width: 64,
-                  child: TextField(
-                    // move cursor to next text field
+        body: SafeArea(
+            child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 100,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text("Code has been Send to ${widget.value}"),
+              const SizedBox(
+                height: 50,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(
+                    height: 68,
+                    width: 64,
+                    child: TextField(
+                      // move cursor to next text field
 
-                    onChanged: (value) {
-                      if (value.length == 1) {
-                        FocusScope.of(context).nextFocus();
-                      }
-                    },
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontSize: 20,
-                    ),
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 26,
-                      ),
-                      hintStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.tertiary,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w100,
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            BorderSide.none, // No border when not focused
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary, // Border color when the TextField is focused
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(1),
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 68,
-                  width: 64,
-                  child: TextField(
-                    // move cursor to next text field
-                    onChanged: (value) {
-                      if (value.length == 1) {
-                        FocusScope.of(context).nextFocus();
-                      }
-                    },
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontSize: 20,
-                    ),
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 26,
-                      ),
-                      hintStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.tertiary,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w100,
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            BorderSide.none, // No border when not focused
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary, // Border color when the TextField is focused
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(1),
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 68,
-                  width: 64,
-                  child: TextField(
-                    // move cursor to next text field
-
-                    onChanged: (value) {
-                      if (value.length == 1) {
-                        FocusScope.of(context).nextFocus();
-                      }
-                    },
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontSize: 20,
-                    ),
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 26,
-                      ),
-                      hintStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.tertiary,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w100,
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            BorderSide.none, // No border when not focused
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary, // Border color when the TextField is focused
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(1),
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 68,
-                  width: 64,
-                  child: TextField(
-                    // move cursor to next text field
-
-                    onChanged: (value) {
-                      if (value.length == 1) {
-                        FocusScope.of(context).nextFocus();
-                      }
-                    },
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontSize: 20,
-                    ),
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 26,
-                      ),
-                      hintStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.tertiary,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w100,
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            BorderSide.none, // No border when not focused
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary, // Border color when the TextField is focused
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(1),
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            _remainingTime > 0
-                ? RichText(
-                    text: TextSpan(
+                      onChanged: (value) {
+                        if (value.length == 1) {
+                          FocusScope.of(context).nextFocus();
+                        }
+                      },
                       style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context).colorScheme.tertiary,
-                        fontWeight: FontWeight.normal,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: 20,
                       ),
-                      children: <TextSpan>[
-                        const TextSpan(text: "Resend Code in "),
-                        TextSpan(
-                          text: "$_remainingTime s",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.secondary,
-                              fontSize: 20,
-                              shadows: [
-                                Shadow(
-                                  offset: const Offset(1, 1),
-                                  blurRadius: 3,
-                                  color: Colors.black.withOpacity(0.5),
-                                )
-                              ]),
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 26,
                         ),
+                        hintStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.tertiary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w100,
+                        ),
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        filled: true,
+                        fillColor: Colors.white,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide:
+                              BorderSide.none, // No border when not focused
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primary, // Border color when the TextField is focused
+                            width: 1,
+                          ),
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(1),
+                        FilteringTextInputFormatter.digitsOnly
                       ],
                     ),
-                  )
-                : ElevatedButton(
-                    onPressed: () {
-                      if (_remainingTime == 0) {
-                        setState(() {
-                          _remainingTime = 60; // Reset the timer
-                          _timer?.cancel(); // Cancel existing timer if any
-                          startTimer(); // Start the timer anew
-                        });
-                      }
-                    },
-                    child: const Text("Resend OTP"),
                   ),
-            const SizedBox(
-              height: 50,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
-              child: TextButton(
-                onPressed: () {},
-                style: TextButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  textStyle: Theme.of(context).textTheme.titleMedium,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Verify",
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                              fontSize: 20,
-                              color: Colors.white,
-                            ),
+                  SizedBox(
+                    height: 68,
+                    width: 64,
+                    child: TextField(
+                      // move cursor to next text field
+                      onChanged: (value) {
+                        if (value.length == 1) {
+                          FocusScope.of(context).nextFocus();
+                        }
+                      },
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: 20,
                       ),
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 26,
+                        ),
+                        hintStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.tertiary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w100,
+                        ),
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        filled: true,
+                        fillColor: Colors.white,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide:
+                              BorderSide.none, // No border when not focused
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primary, // Border color when the TextField is focused
+                            width: 1,
+                          ),
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(1),
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
                     ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 5),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
+                  ),
+                  SizedBox(
+                    height: 68,
+                    width: 64,
+                    child: TextField(
+                      // move cursor to next text field
+
+                      onChanged: (value) {
+                        if (value.length == 1) {
+                          FocusScope.of(context).nextFocus();
+                        }
+                      },
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: 20,
                       ),
-                      child: Icon(
-                        Icons.arrow_right_alt,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 45,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 26,
+                        ),
+                        hintStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.tertiary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w100,
+                        ),
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        filled: true,
+                        fillColor: Colors.white,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide:
+                              BorderSide.none, // No border when not focused
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primary, // Border color when the TextField is focused
+                            width: 1,
+                          ),
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(1),
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 68,
+                    width: 64,
+                    child: TextField(
+                      // move cursor to next text field
+
+                      onChanged: (value) {
+                        if (value.length == 1) {
+                          FocusScope.of(context).nextFocus();
+                        }
+                      },
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: 20,
+                      ),
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 26,
+                        ),
+                        hintStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.tertiary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w100,
+                        ),
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        filled: true,
+                        fillColor: Colors.white,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide:
+                              BorderSide.none, // No border when not focused
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primary, // Border color when the TextField is focused
+                            width: 1,
+                          ),
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(1),
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              _remainingTime > 0
+                  ? RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).colorScheme.tertiary,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        children: <TextSpan>[
+                          const TextSpan(text: "Resend Code in "),
+                          TextSpan(
+                            text: "$_remainingTime s",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.secondary,
+                                fontSize: 20,
+                                shadows: [
+                                  Shadow(
+                                    offset: const Offset(1, 1),
+                                    blurRadius: 3,
+                                    color: Colors.black.withOpacity(0.5),
+                                  )
+                                ]),
+                          ),
+                        ],
                       ),
                     )
-                  ],
+                  : ElevatedButton(
+                      onPressed: () {
+                        if (_remainingTime == 0) {
+                          setState(() {
+                            _remainingTime = 60; // Reset the timer
+                            _timer?.cancel(); // Cancel existing timer if any
+                            startTimer(); // Start the timer anew
+                          });
+                        }
+                      },
+                      child: const Text("Resend OTP"),
+                    ),
+              const SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    textStyle: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "Verify",
+                          textAlign: TextAlign.center,
+                          style:
+                              Theme.of(context).textTheme.titleLarge!.copyWith(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                  ),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.arrow_right_alt,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 45,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      )),
+            ],
+          ),
+        )),
+      ),
     );
   }
 }
