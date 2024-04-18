@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:te_lead/pages/fill_profile.dart';
 import 'package:te_lead/pages/signin-signup/sign_up_page.dart';
 
 class SignInPage extends StatefulWidget {
@@ -56,6 +57,7 @@ class _SignInPageState extends State<SignInPage> {
                   height: 30,
                 ),
                 TextField(
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: "Email",
                     hintStyle: Theme.of(context).textTheme.titleSmall,
@@ -130,7 +132,14 @@ class _SignInPageState extends State<SignInPage> {
                   height: 40,
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FillProfile(),
+                      ),
+                    );
+                  },
                   style: TextButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     textStyle: Theme.of(context).textTheme.titleMedium,
