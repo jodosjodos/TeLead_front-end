@@ -19,7 +19,7 @@ class _SignUpPageState extends State<SignUpPage> {
       hidden = !hidden;
     });
   }
-
+// 
   @override
   void initState() {
     super.initState();
