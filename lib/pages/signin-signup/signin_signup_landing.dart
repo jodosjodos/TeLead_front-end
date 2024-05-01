@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -13,7 +14,7 @@ class SignInSignUpPage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
               "Let’s you in",
@@ -22,7 +23,7 @@ class SignInSignUpPage extends StatelessWidget {
                   ),
             ),
             const SizedBox(
-              height: 25,
+              height: 35,
             ),
             TextButton.icon(
               onPressed: () {},
@@ -60,11 +61,16 @@ class SignInSignUpPage extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 25,
+              height: 60,
             ),
             Text(
               "( Or )",
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            const SizedBox(
+              height: 15,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -101,6 +107,40 @@ class SignInSignUpPage extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Don’t have an Account? ",
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.tertiary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  TextSpan(
+                    text: "SIGN UP",
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                          decorationColor:
+                              Theme.of(context).colorScheme.primary,
+                          decorationThickness: 4,
+                        ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.pushNamed(context, '');
+                      },
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 50,
             )
           ],
         ),
