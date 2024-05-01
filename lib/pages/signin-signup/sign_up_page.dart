@@ -1,5 +1,9 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:te_lead/pages/signin-signup/sign_in_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -105,6 +109,101 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              TextButton(
+                onPressed: () {},
+                style: TextButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  textStyle: Theme.of(context).textTheme.titleMedium,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "Sign Up",
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 5),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.arrow_right_alt,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 45,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              Center(
+                child: Text(
+                  " Or Continue With ",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset("assets/images/google2.svg"),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  SvgPicture.asset("assets/images/apple2.svg"),
+                ],
+              ),
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Already have an Account? ",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.tertiary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      TextSpan(
+                        text: "SIGN IN",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                              decorationColor:
+                                  Theme.of(context).colorScheme.primary,
+                              decorationThickness: 4,
+                            ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SignInPage(),
+                              ),
+                            );
+                          },
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
