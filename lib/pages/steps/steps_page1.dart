@@ -26,10 +26,10 @@ class _StepsPageState extends State<Step1Page> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextButton(
-              onPressed: ()=>skipSteps(context),
+              onPressed: () => skipSteps(context),
               child: Text(
                 "Skip",
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color: Theme.of(context).colorScheme.secondary,
                     ),
               ),

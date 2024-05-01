@@ -50,7 +50,7 @@ class BottomNavigation extends StatelessWidget {
                   style: TextButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Colors.white,
-                    textStyle: Theme.of(context).textTheme.titleLarge,
+                    textStyle: Theme.of(context).textTheme.titleMedium,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,

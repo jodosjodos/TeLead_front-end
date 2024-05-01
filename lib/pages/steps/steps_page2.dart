@@ -29,7 +29,7 @@ class _StepsPageState extends State<Step2Page> {
               onPressed: () => skipSteps(context),
               child: Text(
                 "Skip",
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color: Theme.of(context).colorScheme.secondary,
                     ),
               ),
