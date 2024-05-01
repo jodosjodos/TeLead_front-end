@@ -8,6 +8,7 @@ class SignInSignUpPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: Column(
