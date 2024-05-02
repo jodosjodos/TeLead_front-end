@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:te_lead/pages/steps/steps_page2.dart';
+import 'package:te_lead/widgets/bottomNavigation.dart';
 
 class Step1Page extends StatefulWidget {
   const Step1Page({super.key});
@@ -29,78 +30,34 @@ class _StepsPageState extends State<Step1Page> {
                     color: Theme.of(context).colorScheme.secondary,
                   ),
             ),
-            Column(
-              children: [
-                Text(
-                  "Online Learning",
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  "We Provide Classes Online Classes and Pre Recorded Lectures.!",
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(
-                  height: 12,
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: List.generate(
-                3,
-                (index) => Container(
-                  margin: const EdgeInsets.all(3),
-                  width: currentStep == index ? 25 : 11,
-                  height: 11.0,
-                  decoration: BoxDecoration(
-                    color: index == currentStep ? Colors.blue : Colors.grey,
-                    shape: currentStep == index
-                        ? BoxShape.rectangle
-                        : BoxShape.circle,
-                    borderRadius: currentStep == index
-                        ? const BorderRadius.all(
-                            Radius.circular(
-                              10,
-                            ),
-                          )
-                        : null,
+            Center(
+              child: Column(
+                children: [
+                  Text(
+                    "Online Learning",
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                   ),
-                ),
-              ),
-            ),
-            FloatingActionButton(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Colors.white,
-              onPressed: () {
-                currentStep++;
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: ((context) => Step2Page()),
+                  const SizedBox(
+                    height: 12,
                   ),
-                );
-              },
-              child: const Icon(
-                size: 35,
-                Icons.arrow_right_alt,
+                  Text(
+                    "We Provide Classes Online Classes and Pre Recorded Lectures.!",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(
+                    height: 60,
+                  )
+                ],
               ),
             ),
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigation(
+          currentStep: currentStep, nextPage: const Step2Page()),
     );
   }
 }
