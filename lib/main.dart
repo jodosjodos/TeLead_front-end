@@ -15,9 +15,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromRGBO(9, 97, 245, 1),
-          primary: const Color.fromRGBO(9, 97, 245, 1),
-        ),
+            seedColor: const Color.fromRGBO(9, 97, 245, 1),
+            primary: const Color.fromRGBO(9, 97, 245, 1),
+            secondary: const Color.fromRGBO(32, 34, 68, 1),
+            background: const Color.fromRGBO(245, 249, 255, 1)),
         useMaterial3: true,
       ),
       home: const LandingPage(),
