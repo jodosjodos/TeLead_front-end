@@ -31,7 +31,10 @@ class MyApp extends StatelessWidget {
             fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
-          bodyMedium: GoogleFonts.mulish(fontWeight: FontWeight.bold),
+          bodyMedium: GoogleFonts.mulish(
+            fontWeight: FontWeight.bold,
+          ),
+          titleSmall: GoogleFonts.mulish(),
         ),
         useMaterial3: true,
       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:te_lead/pages/signin-signup/sign_in_page.dart';
+import 'package:te_lead/pages/signin-signup/sign_up_page.dart';
 
 class SignInSignUpPage extends StatelessWidget {
   const SignInSignUpPage({super.key});
@@ -77,7 +79,13 @@ class SignInSignUpPage extends StatelessWidget {
                 horizontal: 16,
               ),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const SignInPage(),
+                    ),
+                  );
+                },
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.white,
@@ -133,7 +141,12 @@ class SignInSignUpPage extends StatelessWidget {
                         ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigator.pushNamed(context, '');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignUpPage(),
+                          ),
+                        );
                       },
                   ),
                 ],
