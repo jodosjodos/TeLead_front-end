@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:te_lead/pages/steps_page.dart';
+import 'package:te_lead/pages/steps/steps_page1.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -13,13 +13,16 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
     Future.delayed(
-        const Duration(seconds: 3),
-        () => {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const StepsPage()),
-              )
-            });
+      const Duration(seconds: 3),
+      () => {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Step1Page(),
+          ),
+        )
+      },
+    );
   }
 
   @override

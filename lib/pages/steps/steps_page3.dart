@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class StepsPage extends StatefulWidget {
-  const StepsPage({super.key});
+class Step2Page extends StatefulWidget {
+  const Step2Page({super.key});
 
   @override
-  State<StepsPage> createState() => _StepsPageState();
+  State<Step2Page> createState() => _StepsPageState();
 }
 
-class _StepsPageState extends State<StepsPage> {
+class _StepsPageState extends State<Step2Page> {
   int currentStep = 2;
 
   @override
@@ -40,7 +40,7 @@ class _StepsPageState extends State<StepsPage> {
                   height: 12,
                 ),
                 Text(
-                  "We Provide Classes Online Classes and Pre Recorded Lectures.!",
+                  "We Provide Classes Online Classes and Pre Recorded Lectures.! step 2",
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
