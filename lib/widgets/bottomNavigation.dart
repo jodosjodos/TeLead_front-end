@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatelessWidget {
-  const BottomNavigation({super.key, required this.currentStep, required this.nextPage});
+  const BottomNavigation(
+      {super.key, required this.currentStep, required this.nextPage});
   final int currentStep;
- final Widget nextPage;
+  final Widget nextPage;
 
   @override
   Widget build(BuildContext context) {
@@ -36,22 +36,49 @@ class BottomNavigation extends StatelessWidget {
               ),
             ),
           ),
-          FloatingActionButton(
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            foregroundColor: Colors.white,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: ((context) => nextPage),
+          currentStep == 2
+              ? TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Colors.white,
+                    textStyle: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Text("Get Started"),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.arrow_right_alt,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 45,
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              : FloatingActionButton(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Colors.white,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => nextPage),
+                      ),
+                    );
+                  },
+                  child: const Icon(
+                    size: 35,
+                    Icons.arrow_right_alt,
+                  ),
                 ),
-              );
-            },
-            child: const Icon(
-              size: 35,
-              Icons.arrow_right_alt,
-            ),
-          ),
         ],
       ),
     );
