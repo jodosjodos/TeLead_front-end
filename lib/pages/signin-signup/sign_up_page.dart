@@ -33,7 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
-            vertical: 100,
+            vertical: 50,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
