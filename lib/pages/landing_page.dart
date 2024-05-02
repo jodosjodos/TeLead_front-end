@@ -7,11 +7,15 @@ class LandingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
-      body: const Center(
-        child: Text("mee"),
-      ),
+      body: Expanded(
+          child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: Theme.of(context).colorScheme.primary,
+        child: Image.asset("assets/images/logo.png"),
+      )),
     );
   }
 }
