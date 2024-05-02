@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:te_lead/pages/signin-signup/signin_signup_landing.dart';
 
 class BottomNavigation extends StatelessWidget {
   const BottomNavigation(
@@ -38,7 +39,12 @@ class BottomNavigation extends StatelessWidget {
           ),
           currentStep == 2
               ? TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignInSignUpPage()));
+                  },
                   style: TextButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Colors.white,
