@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:te_lead/pages/utils/nextStep.dart';
 import 'package:te_lead/widgets/bottomNavigation.dart';
 
 class Step3Page extends StatefulWidget {
@@ -23,11 +24,14 @@ class _StepsPageState extends State<Step3Page> {
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "Skip",
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
+            TextButton(
+              onPressed: () => skipSteps(context),
+              child: Text(
+                "Skip",
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+              ),
             ),
             Center(
               child: Column(

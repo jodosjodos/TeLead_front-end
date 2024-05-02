@@ -41,9 +41,11 @@ class BottomNavigation extends StatelessWidget {
               ? TextButton(
                   onPressed: () {
                     Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SignInSignUpPage()));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SignInSignUpPage(),
+                      ),
+                    );
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primary,
