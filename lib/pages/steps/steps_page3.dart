@@ -49,7 +49,9 @@ class _StepsPageState extends State<Step3Page> {
                   Text(
                     "Analyze your scores and Track your results",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.tertiary,
+                        ),
                   ),
                   const SizedBox(
                     height: 60,
