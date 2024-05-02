@@ -70,7 +70,7 @@ class SignInSignUpPage extends StatelessWidget {
                   ),
             ),
             const SizedBox(
-              height: 15,
+              height: 25,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -109,7 +109,7 @@ class SignInSignUpPage extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 10,
+              height: 25,
             ),
             RichText(
               text: TextSpan(
