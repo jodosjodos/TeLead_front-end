@@ -201,7 +201,7 @@ class _SignInPageState extends State<SignInPage> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "Already have an Account? ",
+                          text: "Don't have account yet ? ",
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
