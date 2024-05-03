@@ -9,7 +9,7 @@ String? emailValidator(String? email) {
 }
 
 String? passwordValidator(String? password) {
-  if (password!.trim().isEmpty || password!.length < 5) {
+  if (password!.trim().isEmpty || password.length < 5) {
     return "Please enter a  strong password";
   }
   return null;
