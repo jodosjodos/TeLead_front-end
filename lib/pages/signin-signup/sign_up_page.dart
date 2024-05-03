@@ -1,7 +1,10 @@
+import 'dart:ffi';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:te_lead/pages/signin-signup/sign_in_page.dart';
+import 'package:te_lead/pages/utils/form_validtors.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -12,11 +15,37 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   bool hidden = true;
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isSubmitting = false;
+
   void togglePasswordState() {
     setState(() {
       hidden = !hidden;
     });
+  }
+
+  _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isSubmitting = true;
+      });
+      final user = {
+        "email": _emailController.text,
+        "password": _passwordController.text
+      };
+
+      // calling apis
+      print(user);
+      Future.delayed(const Duration(seconds: 3), () {
+        setState(() {
+          _isSubmitting = false;
+        });
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Registration successfully')));
+    }
   }
 
   @override
@@ -37,7 +66,7 @@ class _SignUpPageState extends State<SignUpPage> {
               vertical: 50,
             ),
             child: Form(
-              key: formKey,
+              key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -58,30 +87,29 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 30,
                   ),
                   TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "Email",
-                        hintStyle: Theme.of(context).textTheme.titleSmall,
-                        prefixIcon: const Icon(
-                          Icons.email_outlined,
-                        ),
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide.none,
-                        ),
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      hintText: "Email",
+                      hintStyle: Theme.of(context).textTheme.titleSmall,
+                      prefixIcon: const Icon(
+                        Icons.email_outlined,
                       ),
-                      validator: ( value) {
-                        if (value!.isEmpty ) {
-                          return "Please enter a valid email";
-                        }
-                        return null;
-                      }),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    validator: emailValidator,
+                  ),
                   const SizedBox(
                     height: 25,
                   ),
                   TextFormField(
+                    validator: passwordValidator,
+                    controller: _passwordController,
                     obscureText: hidden,
                     decoration: InputDecoration(
                       hintText: "Password",
@@ -123,41 +151,44 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 40,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: _isSubmitting ? null : _submitForm,
                     style: TextButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       textStyle: Theme.of(context).textTheme.titleMedium,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            "Sign Up",
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(
-                                  fontSize: 20,
-                                  color: Colors.white,
+                    child: _isSubmitting
+                        ? const CircularProgressIndicator()
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  "Sign Up",
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                      ),
                                 ),
+                              ),
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.arrow_right_alt,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  size: 45,
+                                ),
+                              )
+                            ],
                           ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 5),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.arrow_right_alt,
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 45,
-                          ),
-                        )
-                      ],
-                    ),
                   ),
                   const SizedBox(
                     height: 25,
