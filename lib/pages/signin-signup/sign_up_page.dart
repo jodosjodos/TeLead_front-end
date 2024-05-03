@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:te_lead/pages/fill_profile.dart';
 import 'package:te_lead/pages/signin-signup/sign_in_page.dart';
 import 'package:te_lead/pages/utils/form_validtors.dart';
 
@@ -38,13 +39,26 @@ class _SignUpPageState extends State<SignUpPage> {
 
       // calling apis
       print(user);
-      Future.delayed(const Duration(seconds: 3), () {
-        setState(() {
-          _isSubmitting = false;
-        });
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Registration successfully')));
+      Future.delayed(
+        const Duration(seconds: 3),
+        () {
+          setState(() {
+            _isSubmitting = false;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              content: const Text('Registration successfully'),
+            ),
+          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const FillProfile(),
+            ),
+          );
+        },
+      );
     }
   }
 
@@ -150,15 +164,18 @@ class _SignUpPageState extends State<SignUpPage> {
                   const SizedBox(
                     height: 40,
                   ),
-                  TextButton(
-                    onPressed: _isSubmitting ? null : _submitForm,
-                    style: TextButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      textStyle: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    child: _isSubmitting
-                        ? const CircularProgressIndicator()
-                        : Row(
+                  _isSubmitting
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : TextButton(
+                          onPressed: _isSubmitting ? null : _submitForm,
+                          style: TextButton.styleFrom(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
+                            textStyle: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
@@ -189,7 +206,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               )
                             ],
                           ),
-                  ),
+                        ),
                   const SizedBox(
                     height: 25,
                   ),
