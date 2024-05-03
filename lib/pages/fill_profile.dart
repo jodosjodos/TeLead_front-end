@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:te_lead/pages/utils/pick_image.dart';
 
 class FillProfile extends StatefulWidget {
   const FillProfile({super.key});
@@ -11,8 +15,10 @@ class FillProfile extends StatefulWidget {
 }
 
 class _FillProfileState extends State<FillProfile> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   String gender = "male";
+  static final List<String> _gender = ["male", "female", "neutral"];
+  Uint8List? _image;
   void selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -27,10 +33,16 @@ class _FillProfileState extends State<FillProfile> {
     }
   }
 
-  static List<String> _gender = ["male", "female", "neutral"];
   void handleGenderChange(String newGender) {
     setState(() {
       gender = newGender;
+    });
+  }
+
+  void selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img;
     });
   }
 
@@ -50,11 +62,19 @@ class _FillProfileState extends State<FillProfile> {
                 children: [
                   Stack(
                     children: [
-                      CircleAvatar(
-                        radius: 50,
-                        child: SvgPicture.asset("assets/images/profile.svg",
-                            height: 100, width: 100),
-                      ),
+                      _image != null
+                          ? CircleAvatar(
+                              radius: 50,
+                              backgroundImage: MemoryImage(_image!),
+                            )
+                          : CircleAvatar(
+                              radius: 50,
+                              child: SvgPicture.asset(
+                                "assets/images/profile.svg",
+                                height: 100,
+                                width: 100,
+                              ),
+                            ),
                       Positioned(
                         bottom: 2,
                         height: 30,
@@ -69,7 +89,7 @@ class _FillProfileState extends State<FillProfile> {
                             icon: const Icon(
                               Icons.edit_calendar_outlined,
                             ),
-                            onPressed: () {},
+                            onPressed: selectImage,
                           ),
                         ),
                       )
