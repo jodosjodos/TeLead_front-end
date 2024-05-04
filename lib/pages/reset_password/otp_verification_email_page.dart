@@ -10,6 +10,12 @@ class OTPVerificationPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
+        title: Text(
+          "Forgot Password",
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+        ),
       ),
       body: SafeArea(
           child: Column(

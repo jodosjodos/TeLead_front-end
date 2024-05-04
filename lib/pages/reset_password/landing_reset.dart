@@ -47,7 +47,12 @@ class _ResetLanding extends State<ResetPasswordLanding> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
-        title: const Text("Forgot Password"),
+      title: Text(
+          "Forgot Password",
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+        ),
       ),
       body: SafeArea(
         child: Form(
