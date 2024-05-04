@@ -74,7 +74,6 @@ _submitForm() {
     // Print user data to console for debugging
     print(user);
 
-    // Start the process of showing the dialog and waiting for 3 seconds
     Future.delayed(const Duration(seconds: 3), () {
       showDialog(
         barrierDismissible: false, // Make dialog modal
