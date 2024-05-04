@@ -56,46 +56,50 @@ class _FillProfileState extends State<FillProfile> {
     });
   }
 
-  _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isSubmitting = true;
-      });
-      final user = {
-        "profileImage": _image,
-        "email": _emailController.text,
-        "fullName": _fullNameController.text,
-        "nickname": _nickNameController.text,
-        "dateOfBirth": _dateController.text,
-        "phone": _phoneNumberController.text,
-        "gender": gender
-      };
+_submitForm() {
+  if (_formKey.currentState!.validate()) {
+    setState(() {
+      _isSubmitting = true;
+    });
+    final user = {
+      "profileImage": _image,
+      "email": _emailController.text,
+      "fullName": _fullNameController.text,
+      "nickname": _nickNameController.text,
+      "dateOfBirth": _dateController.text,
+      "phone": _phoneNumberController.text,
+      "gender": gender
+    };
 
-      // calling apis
-      print(user);
-      Future.delayed(
-        const Duration(seconds: 3),
-        () {
-          setState(() {
-            _isSubmitting = false;
-          });
-          showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (context) {
-              return const SuccessAuthentication();
-            },
-          );
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HomePage(),
-            ),
-          );
+    // Print user data to console for debugging
+    print(user);
+
+    // Start the process of showing the dialog and waiting for 3 seconds
+    Future.delayed(const Duration(seconds: 3), () {
+      showDialog(
+        barrierDismissible: false, // Make dialog modal
+        context: context,
+        builder: (BuildContext context) {
+          return const SuccessAuthentication();
         },
       );
-    }
+
+      // Wait for 3 seconds while showing the dialog
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.of(context).pop(); // Dismiss the dialog
+
+        // Navigate to the HomePage
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      });
+    }).whenComplete(() {
+      setState(() {
+        _isSubmitting = false;
+      });
+    });
   }
+}
 
   @override
   Widget build(BuildContext context) {
