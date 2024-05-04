@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -15,8 +14,15 @@ class FillProfile extends StatefulWidget {
 }
 
 class _FillProfileState extends State<FillProfile> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _nickNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  
   String gender = "male";
+
+
   static final List<String> _gender = ["male", "female", "neutral"];
   Uint8List? _image;
   void selectDate(BuildContext context) async {
@@ -28,7 +34,7 @@ class _FillProfileState extends State<FillProfile> {
     );
     if (pickedDate != null) {
       setState(() {
-        _controller.text = "${pickedDate.toLocal()}".split(" ")[0];
+        _dateController.text = "${pickedDate.toLocal()}".split(" ")[0];
       });
     }
   }
@@ -45,6 +51,7 @@ class _FillProfileState extends State<FillProfile> {
       _image = img;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +105,9 @@ class _FillProfileState extends State<FillProfile> {
                   const SizedBox(
                     height: 30,
                   ),
-                  TextField(
+                  TextFormField(
+                    controller: _fullNameController,
+
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
                       hintText: "Full Name",

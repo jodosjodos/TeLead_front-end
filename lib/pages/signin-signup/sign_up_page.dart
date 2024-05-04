@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -65,6 +64,13 @@ class _SignUpPageState extends State<SignUpPage> {
   void initState() {
     super.initState();
     hidden = !hidden;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
   }
 
   @override
