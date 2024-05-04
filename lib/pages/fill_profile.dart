@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:te_lead/pages/home/home_page.dart';
 import 'package:te_lead/pages/utils/form_validtors.dart';
 import 'package:te_lead/pages/utils/pick_image.dart';
 import 'package:te_lead/widgets/success_full_authentication.dart';
@@ -56,39 +57,44 @@ class _FillProfileState extends State<FillProfile> {
   }
 
   _submitForm() {
-    const SuccessAuthentication();
-    // if (_formKey.currentState!.validate()) {
-    //   setState(() {
-    //     _isSubmitting = true;
-    //   });
-    //   final user = {
-    //     "profileImage": _image,
-    //     "email": _emailController.text,
-    //     "fullName": _fullNameController.text,
-    //     "nickname": _nickNameController.text,
-    //     "dateOfBirth": _dateController.text,
-    //     "phone": _phoneNumberController.text,
-    //     "gender": gender
-    //   };
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isSubmitting = true;
+      });
+      final user = {
+        "profileImage": _image,
+        "email": _emailController.text,
+        "fullName": _fullNameController.text,
+        "nickname": _nickNameController.text,
+        "dateOfBirth": _dateController.text,
+        "phone": _phoneNumberController.text,
+        "gender": gender
+      };
 
-    //   // calling apis
-    //   print(user);
-    //   Future.delayed(
-    //     const Duration(seconds: 3),
-    //     () {
-    //       setState(() {
-    //         _isSubmitting = false;
-    //       });
-    //       const SuccessAuthentication();
-    //       Navigator.push(
-    //         context,
-    //         MaterialPageRoute(
-    //           builder: (context) => const FillProfile(),
-    //         ),
-    //       );
-    //     },
-    //   );
-    // }
+      // calling apis
+      print(user);
+      Future.delayed(
+        const Duration(seconds: 3),
+        () {
+          setState(() {
+            _isSubmitting = false;
+          });
+          showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              return const SuccessAuthentication();
+            },
+          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomePage(),
+            ),
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -272,59 +278,43 @@ class _FillProfileState extends State<FillProfile> {
                     const SizedBox(
                       height: 20,
                     ),
-                    _isSubmitting
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : TextButton(
-                            onPressed: _isSubmitting ? null : _submitForm,
-                            style: TextButton.styleFrom(
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.primary,
-                              textStyle:
-                                  Theme.of(context).textTheme.titleMedium,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    "Continue",
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleLarge!
-                                        .copyWith(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                        ),
-                                  ),
-                                ),
-                                Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: const BoxDecoration(
+                    TextButton(
+                      onPressed: _isSubmitting ? null : _submitForm,
+                      style: TextButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        textStyle: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "Continue",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(
+                                    fontSize: 20,
                                     color: Colors.white,
-                                    shape: BoxShape.circle,
                                   ),
-                                  child: Icon(
-                                    Icons.arrow_right_alt,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    size: 45,
-                                  ),
-                                )
-                              ],
                             ),
                           ),
-                    TextButton(
-                        onPressed: () => showDialog(
-                            // barrierDismissible: false,
-                            context: context,
-                            builder: (context) {
-                              return SuccessAuthentication();
-                            }),
-                        child: Text("Success"))
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 5),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.arrow_right_alt,
+                              color: Theme.of(context).colorScheme.primary,
+                              size: 45,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),

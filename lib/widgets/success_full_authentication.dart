@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SuccessAuthentication extends StatelessWidget {
   const SuccessAuthentication({super.key});
@@ -7,30 +6,28 @@ class SuccessAuthentication extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20)), // Optional: rounded corners
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20.0), // Padding inside the dialog
+          padding: const EdgeInsets.all(20.0),
           child: Column(
-            mainAxisSize: MainAxisSize.min, // Makes the column fit its content
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset("assets/images/successAvatar.png",
-                  width: 120), // Set an appropriate size for the image
-              SizedBox(height: 20), // Spacing between the image and the text
+              Image.asset(
+                "assets/images/successAvatar.png",
+              ),
+              const SizedBox(height: 20),
               Text("Congratulations",
-                  style: Theme.of(context).textTheme.headline6),
-              SizedBox(
-                  height:
-                      10), // Spacing between "Congratulations" and the description
+                  style: Theme.of(context).textTheme.titleLarge),
+              const SizedBox(height: 10),
               Text(
                 "Your Account is Ready to Use. You will be redirected to the Home Page in a Few Seconds.",
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
-              SizedBox(height: 20), // Spacing above the progress indicator
-              CircularProgressIndicator(),
-              SizedBox(height: 20), // Spacing at the bottom of the dialog
+              const SizedBox(height: 20),
+              const CircularProgressIndicator(),
+              const SizedBox(height: 20),
             ],
           ),
         ),
