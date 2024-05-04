@@ -1,3 +1,5 @@
+import 'package:intl_phone_field/phone_number.dart';
+
 const String emailPattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
 final RegExp emailRegex = RegExp(emailPattern);
 const String pattern =
@@ -31,9 +33,18 @@ String? dateValidator(DateTime? date) {
   return null;
 }
 
-String? phoneValidator(String? phone) {
-  if (phone!.isEmpty || !phonePattern.hasMatch(phone)) {
-    return " please enter a valid phone number";
+Future<String?> phoneValidator(PhoneNumber? phone) {
+  if (phone == null ||
+      !phone.isValidNumber() ||
+      !phonePattern.hasMatch(phone.number)) {
+    return Future.value(" please enter a valid phone number");
+  }
+  return Future.value(null);
+}
+
+String? genderValidator(String? gender) {
+  if (gender == null || gender.isEmpty) {
+    return 'Please select an option'; // Ensuring an option is selected
   }
   return null;
 }
