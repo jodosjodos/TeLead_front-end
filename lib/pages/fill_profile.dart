@@ -320,7 +320,6 @@ class _FillProfileState extends State<FillProfile> {
                     TextButton(
                         onPressed: () => showDialog(
                             // barrierDismissible: false,
-                            barrierColor: Colors.red,
                             context: context,
                             builder: (context) {
                               return SuccessAuthentication();
