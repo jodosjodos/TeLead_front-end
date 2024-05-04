@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:te_lead/pages/utils/form_validtors.dart';
 import 'package:te_lead/pages/utils/pick_image.dart';
+import 'package:te_lead/widgets/success_full_authentication.dart';
 
 class FillProfile extends StatefulWidget {
   const FillProfile({super.key});
@@ -55,42 +56,39 @@ class _FillProfileState extends State<FillProfile> {
   }
 
   _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isSubmitting = true;
-      });
-      final user = {
-        "email": _emailController.text,
-        "fullName": _fullNameController.text,
-        "nickname": _nickNameController.text,
-        "dateOfBirth": _dateController.text,
-        "phone": _phoneNumberController.text,
-        "gender": gender
-      };
+    const SuccessAuthentication();
+    // if (_formKey.currentState!.validate()) {
+    //   setState(() {
+    //     _isSubmitting = true;
+    //   });
+    //   final user = {
+    //     "profileImage": _image,
+    //     "email": _emailController.text,
+    //     "fullName": _fullNameController.text,
+    //     "nickname": _nickNameController.text,
+    //     "dateOfBirth": _dateController.text,
+    //     "phone": _phoneNumberController.text,
+    //     "gender": gender
+    //   };
 
-      // calling apis
-      print(user);
-      Future.delayed(
-        const Duration(seconds: 3),
-        () {
-          setState(() {
-            _isSubmitting = false;
-          });
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              content: const Text('updating profile  successfully'),
-            ),
-          );
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const FillProfile(),
-            ),
-          );
-        },
-      );
-    }
+    //   // calling apis
+    //   print(user);
+    //   Future.delayed(
+    //     const Duration(seconds: 3),
+    //     () {
+    //       setState(() {
+    //         _isSubmitting = false;
+    //       });
+    //       const SuccessAuthentication();
+    //       Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //           builder: (context) => const FillProfile(),
+    //         ),
+    //       );
+    //     },
+    //   );
+    // }
   }
 
   @override
@@ -241,14 +239,6 @@ class _FillProfileState extends State<FillProfile> {
                         ),
                       ),
                       languageCode: "en",
-                      onChanged: (phone) {
-                        setState(() {
-                          phone.completeNumber;
-                        });
-                      },
-                      onCountryChanged: (country) {
-                        print('Country changed to: ' + country.name);
-                      },
                     ),
                     DropdownButtonFormField(
                       value: gender,
@@ -327,6 +317,15 @@ class _FillProfileState extends State<FillProfile> {
                               ],
                             ),
                           ),
+                    TextButton(
+                        onPressed: () => showDialog(
+                            // barrierDismissible: false,
+                            barrierColor: Colors.red,
+                            context: context,
+                            builder: (context) {
+                              return SuccessAuthentication();
+                            }),
+                        child: Text("Success"))
                   ],
                 ),
               ),
