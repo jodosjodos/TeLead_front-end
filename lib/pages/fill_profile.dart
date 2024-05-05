@@ -75,7 +75,7 @@ _submitForm() {
 
     Future.delayed(const Duration(seconds: 3), () {
       showDialog(
-        barrierDismissible: false, // Make dialog modal
+        barrierDismissible: false, 
         context: context,
         builder: (BuildContext context) {
           return const SuccessAuthentication();
