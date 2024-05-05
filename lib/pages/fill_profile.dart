@@ -71,7 +71,6 @@ _submitForm() {
       "gender": gender
     };
 
-    // Print user data to console for debugging
     print(user);
 
     Future.delayed(const Duration(seconds: 3), () {
