@@ -7,10 +7,10 @@ class ResetPasswordLanding extends StatefulWidget {
   const ResetPasswordLanding({super.key});
 
   @override
-  State<ResetPasswordLanding> createState() => sumption();
+  State<ResetPasswordLanding> createState() => _ResetLanding();
 }
 
-class sumption extends State<ResetPasswordLanding> {
+class _ResetLanding extends State<ResetPasswordLanding> {
   int? selectedIndex;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
@@ -24,7 +24,7 @@ class sumption extends State<ResetPasswordLanding> {
           context,
           MaterialPageRoute(
             builder: (context) => const OTPVerificationPage(
-              value: "",
+              value: "jeandedieu2030@gmail.com",
             ),
           ),
         );
@@ -33,7 +33,7 @@ class sumption extends State<ResetPasswordLanding> {
           context,
           MaterialPageRoute(
             builder: (context) => const OTPVerificationPage(
-              value: "",
+              value: "+250727866254",
             ),
           ),
         );
