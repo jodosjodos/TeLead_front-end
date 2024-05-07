@@ -27,11 +27,22 @@ class _ResetPasswordState extends State<ResetPassword> {
     hidden != hidden;
   }
 
-void handleSubmit (){
-  if(_formKey.currentState!.validate()){
-    
+  void handleSubmit(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      if (_passwordController.text != _confirmPasswordController.text) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text(
+              " password and confirm password doesn't match",
+            ),
+            backgroundColor: Theme.of(context).colorScheme.primary,
+          ),
+        );
+      }
+      
+    }
   }
-}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,7 +132,7 @@ void handleSubmit (){
               ),
               SubmitButton(
                 value: "Continue",
-                onPress: () {},
+                onPress: () => handleSubmit(context),
               )
             ],
           ),

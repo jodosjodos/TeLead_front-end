@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SuccessAuthentication extends StatelessWidget {
-  const SuccessAuthentication({super.key});
+  const SuccessAuthentication({super.key, required this.avatar});
+  final String avatar;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class SuccessAuthentication extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
-                "assets/images/successAvatar.png",
+                avatar,
               ),
               const SizedBox(height: 20),
               Text("Congratulations",
