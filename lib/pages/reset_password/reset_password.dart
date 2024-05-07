@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:te_lead/pages/home/home_page.dart';
 import 'package:te_lead/pages/utils/form_validtors.dart';
 import 'package:te_lead/widgets/Submit_button.page.dart';
 
@@ -15,6 +16,8 @@ class _ResetPasswordState extends State<ResetPassword> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   bool hidden = true;
+  bool _isSubmitting = false;
+
   void togglePasswordState() {
     setState(() {
       hidden = !hidden;
@@ -29,6 +32,11 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   void handleSubmit(BuildContext context) {
     if (_formKey.currentState!.validate()) {
+      setState(
+        () {
+          _isSubmitting = true;
+        },
+      );
       if (_passwordController.text != _confirmPasswordController.text) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -39,8 +47,34 @@ class _ResetPasswordState extends State<ResetPassword> {
           ),
         );
       }
-      
+      Future.delayed(
+        const Duration(seconds: 3),
+        () {
+          setState(() {
+            _isSubmitting = false;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              content: const Text(' password updated successfully'),
+            ),
+          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomePage(),
+            ),
+          );
+        },
+      );
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _confirmPasswordController.dispose();
+    _passwordController.dispose();
   }
 
   @override
@@ -130,10 +164,14 @@ class _ResetPasswordState extends State<ResetPassword> {
               const SizedBox(
                 height: 40,
               ),
-              SubmitButton(
-                value: "Continue",
-                onPress: () => handleSubmit(context),
-              )
+              _isSubmitting
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : SubmitButton(
+                      value: "Continue",
+                      onPress: () => handleSubmit(context),
+                    )
             ],
           ),
         ),
