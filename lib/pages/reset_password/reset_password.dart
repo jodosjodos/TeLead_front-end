@@ -65,7 +65,9 @@ class _ResetPasswordState extends State<ResetPassword> {
 
           // Navigate to the HomePage
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomePage()),
+            MaterialPageRoute(
+              builder: (context) => const HomePage(),
+            ),
           );
         });
       }).whenComplete(() {
