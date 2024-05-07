@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:te_lead/pages/reset_password/reset_password.dart';
 import 'package:te_lead/widgets/Submit_button.page.dart';
 
 class OTPVerificationPage extends StatefulWidget {
@@ -41,6 +42,15 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
   void dispose() {
     super.dispose();
     _timer?.cancel();
+  }
+
+  void handleVerification() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ResetPassword(),
+      ),
+    );
   }
 
   InputDecoration buildInputDecoration(BuildContext context) {
@@ -246,10 +256,9 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                 height: 50,
               ),
               SubmitButton(
-                  value: "Verify",
-                  onPress: () {
-                    print(" done");
-                  })
+                value: "Verify",
+                onPress: handleVerification,
+              )
             ],
           ),
         )),
