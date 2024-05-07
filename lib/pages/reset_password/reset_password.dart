@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:te_lead/pages/home/home_page.dart';
 import 'package:te_lead/pages/utils/form_validtors.dart';
 import 'package:te_lead/widgets/Submit_button.page.dart';
+import 'package:te_lead/widgets/success_full_authentication.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
@@ -47,26 +48,31 @@ class _ResetPasswordState extends State<ResetPassword> {
           ),
         );
       }
-      Future.delayed(
-        const Duration(seconds: 3),
-        () {
-          setState(() {
-            _isSubmitting = false;
-          });
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              content: const Text(' password updated successfully'),
-            ),
+      Future.delayed(const Duration(seconds: 3), () {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return const SuccessAuthentication(
+              avatar: "assets/images/successAvatar.png",
+            );
+          },
+        );
+
+        // Wait for 3 seconds while showing the dialog
+        Future.delayed(const Duration(seconds: 3), () {
+          Navigator.of(context).pop(); // Dismiss the dialog
+
+          // Navigate to the HomePage
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomePage()),
           );
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HomePage(),
-            ),
-          );
-        },
-      );
+        });
+      }).whenComplete(() {
+        setState(() {
+          _isSubmitting = false;
+        });
+      });
     }
   }
 
