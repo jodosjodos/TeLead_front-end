@@ -1,9 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class ResetPasswordLanding extends StatelessWidget {
+class ResetPasswordLanding extends StatefulWidget {
   const ResetPasswordLanding({super.key});
 
+  @override
+  State<ResetPasswordLanding> createState() => _ResetPasswordLandingState();
+}
+
+class _ResetPasswordLandingState extends State<ResetPasswordLanding> {
+  int? selectedIndex;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,93 +36,117 @@ class ResetPasswordLanding extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 20,
-              ),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(16),
+            GestureDetector(
+              onTap: () {
+                setState(
+                  () {
+                    selectedIndex = 1;
+                  },
+                );
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 20,
                 ),
-              ),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    "assets/images/message.svg",
-                    width: 40,
-                    height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(16),
                   ),
-                  const SizedBox(
-                    width: 12,
+                  border: Border.all(
+                    color: selectedIndex == 1 ? Colors.blue : Colors.white,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Via Email",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.tertiary,
-                          fontSize: 12,
+                ),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      "assets/images/message.svg",
+                      width: 40,
+                      height: 40,
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Via Email",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.tertiary,
+                            fontSize: 12,
+                          ),
                         ),
-                      ),
-                      Text(
-                        "priscilla.frank26@gmail.com",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
+                        Text(
+                          "priscilla.frank26@gmail.com",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 20,
-              ),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(16),
+            GestureDetector(
+              onTap: () {
+                setState(
+                  () {
+                    selectedIndex = 2;
+                  },
+                );
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 20,
                 ),
-              ),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    "assets/images/message.svg",
-                    width: 40,
-                    height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(16),
                   ),
-                  const SizedBox(
-                    width: 12,
+                  border: Border.all(
+                    color: selectedIndex == 2 ? Colors.blue : Colors.white,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Via SMS",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.tertiary,
-                          fontSize: 12,
+                ),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      "assets/images/message.svg",
+                      width: 40,
+                      height: 40,
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Via SMS",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.tertiary,
+                            fontSize: 12,
+                          ),
                         ),
-                      ),
-                      Text(
-                        "( +1 ) 480-894-5529",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
+                        Text(
+                          "( +1 ) 480-894-5529",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
             const SizedBox(
