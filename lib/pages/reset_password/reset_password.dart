@@ -53,6 +53,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
+            //TODO : change image 
             return const SuccessAuthentication(
               avatar: "assets/images/successAvatar.png",
             );
