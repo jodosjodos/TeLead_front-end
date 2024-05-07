@@ -46,7 +46,7 @@ class _SignInPageState extends State<SignInPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: Theme.of(context).colorScheme.primary,
-              content: const Text('Registration successfully'),
+              content: const Text('login successfully'),
             ),
           );
           Navigator.push(
