@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:te_lead/pages/fill_profile.dart';
+import 'package:te_lead/pages/reset_password/landing_reset.dart';
 import 'package:te_lead/pages/signin-signup/sign_up_page.dart';
 import 'package:te_lead/pages/utils/form_validtors.dart';
 
@@ -71,6 +73,15 @@ class _SignInPageState extends State<SignInPage> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  void landingResetNavigator() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ResetPasswordLanding(),
+      ),
+    );
   }
 
   @override
@@ -175,9 +186,21 @@ class _SignInPageState extends State<SignInPage> {
                           ),
                         ],
                       ),
-                      Text(
-                        "Forgot Password?",
-                        style: Theme.of(context).textTheme.bodyMedium,
+                      GestureDetector(
+                        onTap: landingResetNavigator,
+                        child: Text(
+                          "Forgot Password?",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                decoration: TextDecoration.underline,
+                                decorationColor:
+                                    Theme.of(context).colorScheme.primary,
+                                decorationThickness: 2,
+                              ),
+                        ),
                       ),
                     ],
                   ),
