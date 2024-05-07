@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ResetPasswordLanding extends StatefulWidget {
@@ -12,6 +10,35 @@ class ResetPasswordLanding extends StatefulWidget {
 
 class _ResetPasswordLandingState extends State<ResetPasswordLanding> {
   int? selectedIndex;
+  FocusNode emailFocusNode = FocusNode();
+  FocusNode phoneFocusNode = FocusNode();
+  @override
+  // void initState() {
+  //   super.initState();
+  //   emailFocusNode.addListener(
+  //     () {
+  //       if (emailFocusNode.hasFocus) {
+  //         setState(
+  //           () {
+  //             selectedIndex = 1;
+  //           },
+  //         );
+  //       }
+  //     },
+  //   );
+  //   phoneFocusNode.addListener(
+  //     () {
+  //       if (emailFocusNode.hasFocus) {
+  //         setState(
+  //           () {
+  //             selectedIndex = 2;
+  //           },
+  //         );
+  //       }
+  //     },
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,116 +63,102 @@ class _ResetPasswordLandingState extends State<ResetPasswordLanding> {
             const SizedBox(
               height: 30,
             ),
-            GestureDetector(
-              onTap: () {
-                setState(
-                  () {
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+              ),
+              child: TextFormField(
+                onTap: () {
+                  setState(() {
                     selectedIndex = 1;
-                  },
-                );
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 20,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(16),
+                  });
+                },
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 26,
                   ),
-                  border: Border.all(
-                    color: selectedIndex == 1 ? Colors.blue : Colors.white,
+                  hintText: "Via Email",
+                  hintStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.tertiary,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w100,
                   ),
-                ),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: SvgPicture.asset(
                       "assets/images/message.svg",
                       width: 40,
                       height: 40,
                     ),
-                    const SizedBox(
-                      width: 12,
+                  ),
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none, // No border when not focused
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary, // Border color when the TextField is focused
+                      width: 1,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Via Email",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.tertiary,
-                            fontSize: 12,
-                          ),
-                        ),
-                        Text(
-                          "priscilla.frank26@gmail.com",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
+                  ),
                 ),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            GestureDetector(
-              onTap: () {
-                setState(
-                  () {
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+              ),
+              child: TextFormField(
+                onTap: () {
+                  setState(() {
                     selectedIndex = 2;
-                  },
-                );
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 20,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(16),
+                  });
+                },
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 26,
                   ),
-                  border: Border.all(
-                    color: selectedIndex == 2 ? Colors.blue : Colors.white,
+                  hintText: "Via SMS",
+                  hintStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.tertiary,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w100,
                   ),
-                ),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: SvgPicture.asset(
                       "assets/images/message.svg",
                       width: 40,
                       height: 40,
                     ),
-                    const SizedBox(
-                      width: 12,
+                  ),
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none, // No border when not focused
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary, // Border color when the TextField is focused
+                      width: 1,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Via SMS",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.tertiary,
-                            fontSize: 12,
-                          ),
-                        ),
-                        Text(
-                          "( +1 ) 480-894-5529",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -157,7 +170,9 @@ class _ResetPasswordLandingState extends State<ResetPasswordLanding> {
                 horizontal: 20,
               ),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  print(selectedIndex);
+                },
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   textStyle: Theme.of(context).textTheme.titleMedium,
