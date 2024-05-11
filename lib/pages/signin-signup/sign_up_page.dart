@@ -30,6 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
   void initState() {
     super.initState();
     hidden = !hidden;
+    loadEnvVariables();
   }
 
   void togglePasswordState() {
@@ -40,8 +41,10 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Future<void> loadEnvVariables() async {
     await dotenv.load();
-    rootUrl = dotenv.env["API_URL"]!;
-    url = "$rootUrl/user/create";
+    setState(() {
+      rootUrl = dotenv.env["API_URL"]!;
+      url = "$rootUrl/user/create";
+    });
   }
 
   Future<void> _submitForm() async {
