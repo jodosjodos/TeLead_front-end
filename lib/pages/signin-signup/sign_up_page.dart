@@ -6,8 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:te_lead/pages/fill_profile.dart';
 import 'package:te_lead/pages/signin-signup/sign_in_page.dart';
 import 'package:te_lead/pages/utils/form_validtors.dart';
-import "package:http/http.dart" as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:dio/dio.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -24,7 +24,7 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _isSubmitting = false;
   late String rootUrl;
   late String url;
-
+  final dio = Dio();
 //  init
   @override
   void initState() {
@@ -58,17 +58,21 @@ class _SignUpPageState extends State<SignUpPage> {
       };
 
       // calling apis
-      var response = await http.post(
-        Uri.parse(url),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(
-          {
-            "email": user["email"],
-            "password": user["password"],
-          },
-        ),
+      var response = await dio.post(
+        url,
+        data: {
+          "email": user["email"],
+          "password": user["password"],
+        },
       );
-      print(response);
+      if (response.statusCode != 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Theme.of(context).colorScheme.error,
+            content: Text(response.statusMessage!),
+          ),
+        );
+      }
       Future.delayed(
         const Duration(seconds: 3),
         () {
