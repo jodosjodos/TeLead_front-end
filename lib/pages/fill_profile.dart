@@ -5,8 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:te_lead/pages/home/home_page.dart';
-import 'package:te_lead/pages/utils/form_validtors.dart';
-import 'package:te_lead/pages/utils/pick_image.dart';
+import 'package:te_lead/utils/form_validtors.dart';
+import 'package:te_lead/utils/pick_image.dart';
 import 'package:te_lead/widgets/success_full_authentication.dart';
 
 class FillProfile extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:te_lead/pages/utils/nextStep.dart';
+import 'package:te_lead/utils/nextStep.dart';
 import 'package:te_lead/widgets/bottomNavigation.dart';
 
 class Step3Page extends StatefulWidget {

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:te_lead/pages/fill_profile.dart';
 import 'package:te_lead/pages/signin-signup/sign_in_page.dart';
-import 'package:te_lead/pages/utils/form_validtors.dart';
+import 'package:te_lead/utils/form_validtors.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:dio/dio.dart';
 

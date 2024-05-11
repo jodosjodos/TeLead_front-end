@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:te_lead/pages/fill_profile.dart';
 import 'package:te_lead/pages/reset_password/landing_reset.dart';
 import 'package:te_lead/pages/signin-signup/sign_up_page.dart';
-import 'package:te_lead/pages/utils/form_validtors.dart';
+import 'package:te_lead/utils/form_validtors.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
