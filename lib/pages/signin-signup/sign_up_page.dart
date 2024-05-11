@@ -52,7 +52,6 @@ class _SignUpPageState extends State<SignUpPage> {
       setState(() {
         _isSubmitting = true;
       });
-      final context = widgetKey.currentContext!;
 
       final Map<String, String> user = {
         "email": _emailController.text,
@@ -70,50 +69,46 @@ class _SignUpPageState extends State<SignUpPage> {
               _isSubmitting = false;
             },
           );
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                content: const Text('Registration successfully'),
-              ),
-            );
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const FillProfile(),
-              ),
-            );
-          }
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              content: const Text('Registration successfully'),
+            ),
+          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const FillProfile(),
+            ),
+          );
         }
       } on DioException catch (e) {
         final error = e.response?.data;
         final String message = error["response"]["message"].toString();
         final String statusCode = error["statusCode"].toString();
-        if (context.mounted) {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text("Fail to sign up"),
-                content: Text(
-                  "$message : $statusCode",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.error,
-                  ),
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Fail to sign up"),
+              content: Text(
+                "$message : $statusCode",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.error,
                 ),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('OK'),
-                  ),
-                ],
-              );
-            },
-          );
-          _isSubmitting = false;
-        }
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+        _isSubmitting = false;
       } finally {
         setState(() {
           _isSubmitting = false;
