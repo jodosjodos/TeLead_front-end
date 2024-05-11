@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,6 +17,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   bool hidden = true;
   final _formKey = GlobalKey<FormState>();
+  final GlobalKey<_SignUpPageState> widgetKey = GlobalKey<_SignUpPageState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isSubmitting = false;
@@ -48,13 +48,12 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future<void> _submitForm() async {
-    // dio.interceptors.add(InterceptorsWrapper(
-    //   onRequest:
-    // ));
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isSubmitting = true;
       });
+      final context = widgetKey.currentContext!;
+
       final Map<String, String> user = {
         "email": _emailController.text,
         "password": _passwordController.text
@@ -71,47 +70,50 @@ class _SignUpPageState extends State<SignUpPage> {
               _isSubmitting = false;
             },
           );
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              content: const Text('Registration successfully'),
-            ),
-          );
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const FillProfile(),
-            ),
-          );
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                content: const Text('Registration successfully'),
+              ),
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const FillProfile(),
+              ),
+            );
+          }
         }
       } on DioException catch (e) {
         final error = e.response?.data;
         final String message = error["response"]["message"].toString();
         final String statusCode = error["statusCode"].toString();
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("Fail to sign up"),
-              content: Text(
-                "$message : $statusCode",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.error,
+        if (context.mounted) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Fail to sign up"),
+                content: Text(
+                  "$message : $statusCode",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
                 ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-
-        _isSubmitting = false;
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+          _isSubmitting = false;
+        }
       } finally {
         setState(() {
           _isSubmitting = false;
