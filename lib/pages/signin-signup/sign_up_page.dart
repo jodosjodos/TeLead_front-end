@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:te_lead/pages/fill_profile.dart';
 import 'package:te_lead/pages/signin-signup/sign_in_page.dart';
 import 'package:te_lead/pages/utils/form_validtors.dart';
+import "package:http/http.dart" as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -18,6 +22,15 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isSubmitting = false;
+  late String rootUrl;
+  late String url;
+
+//  init
+  @override
+  void initState() {
+    super.initState();
+    hidden = !hidden;
+  }
 
   void togglePasswordState() {
     setState(() {
@@ -25,18 +38,34 @@ class _SignUpPageState extends State<SignUpPage> {
     });
   }
 
-  _submitForm() {
+  Future<void> loadEnvVariables() async {
+    await dotenv.load();
+    rootUrl = dotenv.env["API_URL"]!;
+    url = "$rootUrl/user/create";
+  }
+
+  Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isSubmitting = true;
       });
-      final user = {
+      final Map<String, String> user = {
         "email": _emailController.text,
         "password": _passwordController.text
       };
 
       // calling apis
-      print(user);
+      var response = await http.post(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(
+          {
+            "email": user["email"],
+            "password": user["password"],
+          },
+        ),
+      );
+      print(response);
       Future.delayed(
         const Duration(seconds: 3),
         () {
@@ -58,12 +87,6 @@ class _SignUpPageState extends State<SignUpPage> {
         },
       );
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    hidden = !hidden;
   }
 
   @override
