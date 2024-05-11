@@ -24,12 +24,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromRGBO(9, 97, 245, 1),
-          primary: const Color.fromRGBO(9, 97, 245, 1),
-          secondary: const Color.fromRGBO(32, 34, 68, 1),
-          background: const Color.fromRGBO(245, 249, 255, 1),
-          tertiary: const Color.fromRGBO(84, 84, 84, 1),
-        ),
+            seedColor: const Color.fromRGBO(9, 97, 245, 1),
+            primary: const Color.fromRGBO(9, 97, 245, 1),
+            secondary: const Color.fromRGBO(32, 34, 68, 1),
+            background: const Color.fromRGBO(245, 249, 255, 1),
+            tertiary: const Color.fromRGBO(84, 84, 84, 1),
+            error: Colors.red),
         textTheme: TextTheme(
           titleMedium: GoogleFonts.jost(
             fontSize: 18,

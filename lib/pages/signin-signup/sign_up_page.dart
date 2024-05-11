@@ -25,6 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
   late String rootUrl;
   late String url;
   final dio = Dio();
+
 //  init
   @override
   void initState() {
@@ -48,6 +49,9 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future<void> _submitForm() async {
+    // dio.interceptors.add(InterceptorsWrapper(
+    //   onRequest:
+    // ));
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isSubmitting = true;
@@ -56,29 +60,18 @@ class _SignUpPageState extends State<SignUpPage> {
         "email": _emailController.text,
         "password": _passwordController.text
       };
-
-      // calling apis
-      var response = await dio.post(
-        url,
-        data: {
-          "email": user["email"],
-          "password": user["password"],
-        },
-      );
-      if (response.statusCode != 201) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Theme.of(context).colorScheme.error,
-            content: Text(response.statusMessage!),
-          ),
+      try {
+        // calling apis
+        var response = await dio.post(
+          url,
+          data: user,
         );
-      }
-      Future.delayed(
-        const Duration(seconds: 3),
-        () {
-          setState(() {
-            _isSubmitting = false;
-          });
+        if (response.statusCode == 201) {
+          setState(
+            () {
+              _isSubmitting = false;
+            },
+          );
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: Theme.of(context).colorScheme.primary,
@@ -91,8 +84,40 @@ class _SignUpPageState extends State<SignUpPage> {
               builder: (context) => const FillProfile(),
             ),
           );
-        },
-      );
+        }
+      } on DioException catch (e) {
+        final error = e.response?.data;
+        final String message = error["response"]["message"].toString();
+        final String statusCode = error["statusCode"].toString();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Fail to sign up"),
+              content: Text(
+                "$message : $statusCode",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+
+        _isSubmitting = false;
+      } finally {
+        setState(() {
+          _isSubmitting = false;
+        });
+      }
     }
   }
 
