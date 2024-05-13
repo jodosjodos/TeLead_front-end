@@ -66,6 +66,7 @@ class _SignUpPageState extends State<SignUpPage> {
         if (response.statusCode == 201) {
           setState(
             () {
+              
               _isSubmitting = false;
             },
           );
