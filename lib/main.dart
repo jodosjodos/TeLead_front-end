@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:te_lead/pages/landing_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:te_lead/pages/steps/steps_page1.dart';
 
 Future<void> main() async {
   await dotenv.load(
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const LandingPage(),
+      home: const Step1Page(),
     );
   }
 }
