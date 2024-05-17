@@ -1,10 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:te_lead/pages/fill_profile.dart';
+import 'package:te_lead/pages/home/home_page.dart';
 import 'package:te_lead/pages/reset_password/landing_reset.dart';
 import 'package:te_lead/pages/signin-signup/sign_up_page.dart';
 import 'package:te_lead/utils/form_validtors.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -15,63 +17,108 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   bool hidden = true;
-  bool? selected = false;
+  bool selected = false;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isSubmitting = false;
+  final dio = Dio();
+  String? rootUrl;
+  String? url;
+
+  @override
+  void initState() {
+    super.initState();
+    loadEnvVariables();
+  }
+
   void togglePasswordState() {
     setState(() {
       hidden = !hidden;
     });
   }
 
-  _submitForm() {
+  // Load env variables
+  Future<void> loadEnvVariables() async {
+    await dotenv.load();
+    setState(() {
+      rootUrl = dotenv.env["API_URL"];
+      url = "$rootUrl/user/login";
+    });
+  }
+
+  Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isSubmitting = true;
       });
-      final user = {
-        "email": _emailController.text,
-        "password": _passwordController.text
-      };
 
-      // calling apis
-      print(user);
-      Future.delayed(
-        const Duration(seconds: 3),
-        () {
+      final Map<String, String> user = {
+        "email": _emailController.text,
+        "password": _passwordController.text,
+      };
+      try {
+        // Calling API
+        var response = await dio.post(
+          url!,
+          data: user,
+        );
+        if (response.statusCode == 200) {
           setState(() {
             _isSubmitting = false;
           });
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: Theme.of(context).colorScheme.primary,
-              content: const Text('login successfully'),
+              content: const Text('Login successfully'),
             ),
           );
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const FillProfile(),
+              builder: (context) => const HomePage(),
             ),
           );
-        },
-      );
+        }
+      } on DioException catch (e) {
+        final error = e.response?.data;
+        final String message = error["response"]["message"].toString();
+        final String statusCode = error["statusCode"].toString();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Fail to sign in"),
+              content: Text(
+                "$message : $statusCode",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } finally {
+        setState(() {
+          _isSubmitting = false;
+        });
+      }
     }
   }
 
   @override
-  void initState() {
-    super.initState();
-    hidden = !hidden;
-  }
-
-  @override
   void dispose() {
-    super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    super.dispose();
   }
 
   void landingResetNavigator() {
@@ -90,10 +137,7 @@ class _SignInPageState extends State<SignInPage> {
         physics: const BouncingScrollPhysics(),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 50,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
             child: Form(
               key: _formKey,
               child: Column(
@@ -105,16 +149,12 @@ class _SignInPageState extends State<SignInPage> {
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5),
                   Text(
                     "Login to Your Account to Continue your Courses",
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   TextFormField(
                     controller: _emailController,
                     validator: emailValidator,
@@ -122,20 +162,17 @@ class _SignInPageState extends State<SignInPage> {
                     decoration: InputDecoration(
                       hintText: "Email",
                       hintStyle: Theme.of(context).textTheme.titleSmall,
-                      prefixIcon: const Icon(
-                        Icons.email_outlined,
-                      ),
+                      prefixIcon: const Icon(Icons.email_outlined),
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide.none),
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 25,
-                  ),
+                  const SizedBox(height: 25),
                   TextFormField(
                     controller: _passwordController,
                     validator: passwordValidator,
@@ -143,9 +180,7 @@ class _SignInPageState extends State<SignInPage> {
                     decoration: InputDecoration(
                       hintText: "Password",
                       hintStyle: Theme.of(context).textTheme.titleSmall,
-                      prefixIcon: const Icon(
-                        Icons.lock_outline,
-                      ),
+                      prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
                         onPressed: togglePasswordState,
                         icon: hidden
@@ -161,9 +196,7 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -172,11 +205,9 @@ class _SignInPageState extends State<SignInPage> {
                           Checkbox(
                             value: selected,
                             onChanged: (value) {
-                              setState(
-                                () {
-                                  selected = value;
-                                },
-                              );
+                              setState(() {
+                                selected = value!;
+                              });
                             },
                           ),
                           Text(
@@ -203,13 +234,9 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 40,
-                  ),
+                  const SizedBox(height: 40),
                   _isSubmitting
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
+                      ? const Center(child: CircularProgressIndicator())
                       : TextButton(
                           onPressed: _submitForm,
                           style: TextButton.styleFrom(
@@ -245,13 +272,11 @@ class _SignInPageState extends State<SignInPage> {
                                   color: Theme.of(context).colorScheme.primary,
                                   size: 45,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
-                  const SizedBox(
-                    height: 25,
-                  ),
+                  const SizedBox(height: 25),
                   Center(
                     child: Text(
                       " Or Continue With ",
@@ -259,16 +284,12 @@ class _SignInPageState extends State<SignInPage> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  const SizedBox(
-                    height: 25,
-                  ),
+                  const SizedBox(height: 25),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset("assets/images/google2.svg"),
-                      const SizedBox(
-                        width: 20,
-                      ),
+                      const SizedBox(width: 20),
                       SvgPicture.asset("assets/images/apple2.svg"),
                     ],
                   ),
