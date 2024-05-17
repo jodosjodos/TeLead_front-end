@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:te_lead/pages/steps/steps_page3.dart';
 import 'package:te_lead/utils/nextStep.dart';
-import 'package:te_lead/widgets/bottomNavigation.dart';
+import 'package:te_lead/widgets/bottom_navigation.dart';
 
 class Step2Page extends StatefulWidget {
   const Step2Page({super.key});

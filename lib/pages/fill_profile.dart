@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:te_lead/pages/home/home_page.dart';
+import 'package:provider/provider.dart';
+import 'package:te_lead/providers/user_provider.dart';
 import 'package:te_lead/utils/form_validtors.dart';
 import 'package:te_lead/utils/pick_image.dart';
-import 'package:te_lead/widgets/success_full_authentication.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:dio/dio.dart';
 
 class FillProfile extends StatefulWidget {
   const FillProfile({super.key});
@@ -26,9 +28,15 @@ class _FillProfileState extends State<FillProfile> {
   bool _isSubmitting = false;
   String? phoneNumber;
   String gender = "male";
+  late String rootUrl;
+  late String url;
+  final dio = Dio();
 
   static final List<String> _gender = ["male", "female", "neutral"];
   Uint8List? _image;
+
+ 
+
   void selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -56,12 +64,20 @@ class _FillProfileState extends State<FillProfile> {
     });
   }
 
-  _submitForm() {
+  Future<void> loadEnvVariables() async {
+    await dotenv.load();
+    setState(() {
+      rootUrl = dotenv.env["API_URL"]!;
+      url = "$rootUrl/user/c";
+    });
+  }
+  
+  Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isSubmitting = true;
       });
-      final user = {
+      final Map<String, dynamic> user = {
         "profileImage": _image,
         "email": _emailController.text,
         "fullName": _fullNameController.text,
@@ -71,34 +87,83 @@ class _FillProfileState extends State<FillProfile> {
         "gender": gender
       };
 
-      print(user);
-
-      Future.delayed(const Duration(seconds: 3), () {
+      try {
+        var response = await dio.post(url, data: user);
+      } on DioException catch (e) {
+        final error = e.response?.data;
+        final String message = error["response"]["message"].toString();
+        final String statusCode = error["statusCode"].toString();
         showDialog(
-          barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
-            return const SuccessAuthentication(
-              avatar: "assets/images/successAvatar.png",
+            return AlertDialog(
+              title: const Text("Fail to sign up"),
+              content: Text(
+                "$message : $statusCode",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
             );
           },
         );
-
-        // Wait for 3 seconds while showing the dialog
-        Future.delayed(const Duration(seconds: 3), () {
-          Navigator.of(context).pop(); // Dismiss the dialog
-
-          // Navigate to the HomePage
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
-        });
-      }).whenComplete(() {
+        _isSubmitting = false;
+      } finally {
         setState(() {
           _isSubmitting = false;
         });
-      });
+      }
+
+      // Future.delayed(const Duration(seconds: 3), () {
+      //   showDialog(
+      //     barrierDismissible: false,
+      //     context: context,
+      //     builder: (BuildContext context) {
+      //       return const SuccessAuthentication(
+      //         avatar: "assets/images/successAvatar.png",
+      //       );
+      //     },
+      //   );
+
+      //   // Wait for 3 seconds while showing the dialog
+      //   Future.delayed(const Duration(seconds: 3), () {
+      //     Navigator.of(context).pop(); // Dismiss the dialog
+
+      //     // Navigate to the HomePage
+      //     Navigator.of(context).pushReplacement(
+      //       MaterialPageRoute(builder: (context) => const HomePage()),
+      //     );
+      //   });
+      // }).whenComplete(() {
+      //   setState(() {
+      //     _isSubmitting = false;
+      //   });
+      // });
     }
+  }
+
+  @override
+  void initState() {
+    loadEnvVariables();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _dateController.dispose();
+    _fullNameController.dispose();
+    _nickNameController.dispose();
+    _emailController.dispose();
+    _phoneNumberController.dispose();
+    super.dispose();
   }
 
   @override

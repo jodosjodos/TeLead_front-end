@@ -1,12 +1,14 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:te_lead/pages/home/home_page.dart';
 import 'package:te_lead/pages/reset_password/landing_reset.dart';
 import 'package:te_lead/pages/signin-signup/sign_up_page.dart';
+import 'package:te_lead/providers/user_provider.dart';
 import 'package:te_lead/utils/form_validtors.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:te_lead/widgets/continue_type.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -67,12 +69,17 @@ class _SignInPageState extends State<SignInPage> {
           setState(() {
             _isSubmitting = false;
           });
+          Provider.of<UserProvider>(context, listen: false).updateUser({
+            "token": response.data["token"],
+            "userId": response.data["user"]["id"],
+          });
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: Theme.of(context).colorScheme.primary,
               content: const Text('Login successfully'),
             ),
           );
+
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -81,6 +88,7 @@ class _SignInPageState extends State<SignInPage> {
           );
         }
       } on DioException catch (e) {
+        print(e);
         final error = e.response?.data;
         final String message = error["response"]["message"].toString();
         final String statusCode = error["statusCode"].toString();
@@ -293,46 +301,13 @@ class _SignInPageState extends State<SignInPage> {
                       SvgPicture.asset("assets/images/apple2.svg"),
                     ],
                   ),
-                  Center(
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Don't have account yet ? ",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  color: Theme.of(context).colorScheme.tertiary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          TextSpan(
-                            text: "SIGN UP",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                  decoration: TextDecoration.underline,
-                                  decorationColor:
-                                      Theme.of(context).colorScheme.primary,
-                                  decorationThickness: 4,
-                                ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const SignUpPage(),
-                                  ),
-                                );
-                              },
-                          ),
-                        ],
-                      ),
-                    ),
+                  const ContinueWay(
+                    directText: "SIGN_UP",
+                    directWidget: SignUpPage(),
+                    descText: "Don't have account yet ?",
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                 ],
               ),

@@ -1,8 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:te_lead/pages/fill_profile.dart';
 import 'package:te_lead/pages/signin-signup/sign_in_page.dart';
+import 'package:te_lead/providers/user_provider.dart';
 import 'package:te_lead/utils/form_validtors.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:dio/dio.dart';
@@ -66,10 +68,13 @@ class _SignUpPageState extends State<SignUpPage> {
         if (response.statusCode == 201) {
           setState(
             () {
-              
               _isSubmitting = false;
             },
           );
+          Provider.of<UserProvider>(context, listen: false).updateUser({
+            "token": response.data["token"],
+            "userId": response.data["user"]["id"],
+          });
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: Theme.of(context).colorScheme.primary,
