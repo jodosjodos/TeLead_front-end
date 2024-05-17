@@ -163,6 +163,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 30,
                   ),
                   TextFormField(
+                    keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                     decoration: InputDecoration(
                       hintText: "Email",
@@ -184,6 +185,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 25,
                   ),
                   TextFormField(
+                    keyboardType: TextInputType.visiblePassword,
                     validator: passwordValidator,
                     controller: _passwordController,
                     obscureText: hidden,

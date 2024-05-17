@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -30,12 +31,19 @@ class _FillProfileState extends State<FillProfile> {
   String gender = "male";
   late String rootUrl;
   late String url;
-  final dio = Dio();
-
+  late String id;
+  late String token;
+  late Dio dio;
+  // gender
   static final List<String> _gender = ["male", "female", "neutral"];
   Uint8List? _image;
 
- 
+  // load initial values
+  @override
+  void initState() {
+    loadEnvVariables();
+    super.initState();
+  }
 
   void selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -68,10 +76,21 @@ class _FillProfileState extends State<FillProfile> {
     await dotenv.load();
     setState(() {
       rootUrl = dotenv.env["API_URL"]!;
-      url = "$rootUrl/user/c";
+      url = "$rootUrl/user/fillProfile";
+      //  load provider user
+      final Map<String, dynamic> userDetails =
+          Provider.of<UserProvider>(context).userData;
+      id = userDetails["id"];
+
+      token = userDetails["token"];
+      dio = Dio(
+        BaseOptions(
+          headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+        ),
+      );
     });
   }
-  
+
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -87,8 +106,10 @@ class _FillProfileState extends State<FillProfile> {
         "gender": gender
       };
 
+      final realUrl = "$url/$id";
       try {
-        var response = await dio.post(url, data: user);
+        var response = await dio.post(realUrl, data: user);
+        print(response.data);
       } on DioException catch (e) {
         final error = e.response?.data;
         final String message = error["response"]["message"].toString();
@@ -148,12 +169,6 @@ class _FillProfileState extends State<FillProfile> {
       //   });
       // });
     }
-  }
-
-  @override
-  void initState() {
-    loadEnvVariables();
-    super.initState();
   }
 
   @override
