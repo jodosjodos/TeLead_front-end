@@ -115,11 +115,7 @@ class _FillProfileState extends State<FillProfile> {
       final realUrl = "$url/$id";
       try {
         var response = await dio.patch(realUrl, data: FormData.fromMap(user));
-        print(response.data);
-        // Provider.of<UserProvider>(context, listen: false).updateUser({
-        //   "token": response.data["token"],
-        //   "userId": response.data["user"]["id"],
-        // });
+      
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Theme.of(context).colorScheme.primary,
