@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
+import 'package:te_lead/pages/home/home_page.dart';
 import 'package:te_lead/providers/user_provider.dart';
 import 'package:te_lead/utils/form_validtors.dart';
 import 'package:te_lead/utils/pick_image.dart';
@@ -24,19 +25,18 @@ class _FillProfileState extends State<FillProfile> {
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _nickNameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   bool _isSubmitting = false;
   String? phoneNumber;
-  String gender = "male";
+  String gender = "MALE";
+  String role = "STUDENT";
   late String rootUrl;
   late String url;
-  late String id;
-  late String token;
-  late Dio dio;
+
   // gender
-  static final List<String> _gender = ["male", "female", "neutral"];
-  Uint8List? _image;
+  static final List<String> _gender = ["MALE", "FEMALE"];
+  static final List<String> _role = ["STUDENT", "TEACHER"];
+  var _image;
 
   // load initial values
   @override
@@ -54,7 +54,7 @@ class _FillProfileState extends State<FillProfile> {
     );
     if (pickedDate != null) {
       setState(() {
-        _dateController.text = "${pickedDate.toLocal()}".split(" ")[0];
+        _dateController.text = pickedDate.toIso8601String();
       });
     }
   }
@@ -62,6 +62,12 @@ class _FillProfileState extends State<FillProfile> {
   void handleGenderChange(String newGender) {
     setState(() {
       gender = newGender;
+    });
+  }
+
+  void handleRoleChange(String newRole) {
+    setState(() {
+      role = newRole;
     });
   }
 
@@ -78,16 +84,6 @@ class _FillProfileState extends State<FillProfile> {
       rootUrl = dotenv.env["API_URL"]!;
       url = "$rootUrl/user/fillProfile";
       //  load provider user
-      final Map<String, dynamic> userDetails =
-          Provider.of<UserProvider>(context).userData;
-      id = userDetails["id"];
-
-      token = userDetails["token"];
-      dio = Dio(
-        BaseOptions(
-          headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
-        ),
-      );
     });
   }
 
@@ -97,19 +93,45 @@ class _FillProfileState extends State<FillProfile> {
         _isSubmitting = true;
       });
       final Map<String, dynamic> user = {
-        "profileImage": _image,
-        "email": _emailController.text,
+        "file": MultipartFile.fromBytes(_image!, filename: "profile"),
         "fullName": _fullNameController.text,
-        "nickname": _nickNameController.text,
-        "dateOfBirth": _dateController.text,
-        "phone": _phoneNumberController.text,
-        "gender": gender
+        "nickName": _nickNameController.text,
+        "dateOfBirth":
+            "${DateTime.parse(_dateController.text).toIso8601String()}Z",
+        "phoneNumber": _phoneNumberController.text,
+        "gender": gender,
+        "role": role
       };
+      final Map<String, dynamic> userDetails =
+          Provider.of<UserProvider>(context, listen: false).userData;
+      final String id = userDetails["userId"];
+      final String token = userDetails["token"];
 
+      final Dio dio = Dio(
+        BaseOptions(
+          headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+        ),
+      );
       final realUrl = "$url/$id";
       try {
-        var response = await dio.post(realUrl, data: user);
+        var response = await dio.patch(realUrl, data: FormData.fromMap(user));
         print(response.data);
+        // Provider.of<UserProvider>(context, listen: false).updateUser({
+        //   "token": response.data["token"],
+        //   "userId": response.data["user"]["id"],
+        // });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            content: const Text('updating profile  successfully'),
+          ),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
       } on DioException catch (e) {
         final error = e.response?.data;
         final String message = error["response"]["message"].toString();
@@ -118,7 +140,7 @@ class _FillProfileState extends State<FillProfile> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text("Fail to sign up"),
+              title: const Text("Fail to update profile"),
               content: Text(
                 "$message : $statusCode",
                 style: TextStyle(
@@ -142,32 +164,6 @@ class _FillProfileState extends State<FillProfile> {
           _isSubmitting = false;
         });
       }
-
-      // Future.delayed(const Duration(seconds: 3), () {
-      //   showDialog(
-      //     barrierDismissible: false,
-      //     context: context,
-      //     builder: (BuildContext context) {
-      //       return const SuccessAuthentication(
-      //         avatar: "assets/images/successAvatar.png",
-      //       );
-      //     },
-      //   );
-
-      //   // Wait for 3 seconds while showing the dialog
-      //   Future.delayed(const Duration(seconds: 3), () {
-      //     Navigator.of(context).pop(); // Dismiss the dialog
-
-      //     // Navigate to the HomePage
-      //     Navigator.of(context).pushReplacement(
-      //       MaterialPageRoute(builder: (context) => const HomePage()),
-      //     );
-      //   });
-      // }).whenComplete(() {
-      //   setState(() {
-      //     _isSubmitting = false;
-      //   });
-      // });
     }
   }
 
@@ -176,7 +172,6 @@ class _FillProfileState extends State<FillProfile> {
     _dateController.dispose();
     _fullNameController.dispose();
     _nickNameController.dispose();
-    _emailController.dispose();
     _phoneNumberController.dispose();
     super.dispose();
   }
@@ -294,26 +289,6 @@ class _FillProfileState extends State<FillProfile> {
                     const SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
-                      controller: _emailController,
-                      validator: emailValidator,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        hintText: "Email",
-                        hintStyle: Theme.of(context).textTheme.titleSmall,
-                        prefixIcon: const Icon(Icons.email_outlined),
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
                     IntlPhoneField(
                       controller: _phoneNumberController,
                       validator: phoneValidator,
@@ -362,43 +337,84 @@ class _FillProfileState extends State<FillProfile> {
                     const SizedBox(
                       height: 20,
                     ),
-                    TextButton(
-                      onPressed: _isSubmitting ? null : _submitForm,
-                      style: TextButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        textStyle: Theme.of(context).textTheme.titleMedium,
+                    DropdownButtonFormField(
+                      value: role,
+                      validator: roleValidator,
+                      decoration: InputDecoration(
+                        hintText: "role",
+                        hintStyle: Theme.of(context).textTheme.titleSmall,
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              "Continue",
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                  ),
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 5),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              Icons.arrow_right_alt,
-                              color: Theme.of(context).colorScheme.primary,
-                              size: 45,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                      items: _role
+                          .map<DropdownMenuItem<String>>(
+                            (String value) => DropdownMenuItem<String>(
+                              value: value, // Use unique values for role items
+                              child: Text(value),
                             ),
                           )
-                        ],
-                      ),
+                          .toList(),
+                      onChanged: (String? value) {
+                        handleRoleChange(
+                            value!); // Ensure you update the role value
+                      },
                     ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    _isSubmitting
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : TextButton(
+                            onPressed: _isSubmitting ? null : _submitForm,
+                            style: TextButton.styleFrom(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
+                              textStyle:
+                                  Theme.of(context).textTheme.titleMedium,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    "Continue",
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                        ),
+                                  ),
+                                ),
+                                Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.arrow_right_alt,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    size: 45,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                   ],
                 ),
               ),

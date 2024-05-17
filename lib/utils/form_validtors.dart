@@ -48,3 +48,10 @@ String? genderValidator(String? gender) {
   }
   return null;
 }
+
+String? roleValidator(String? gender) {
+  if (gender == null || gender.isEmpty) {
+    return 'Please select an option'; // Ensuring an option is selected
+  }
+  return null;
+}
