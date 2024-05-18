@@ -37,14 +37,7 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
     loadEnvVariables();
   }
 
-// Load env variables
-  Future<void> loadEnvVariables() async {
-    await dotenv.load();
-    setState(() {
-      rootUrl = dotenv.env["API_URL"];
-    });
-  }
-
+// timer counter
   void startTimer() {
     _timer = Timer.periodic(
       const Duration(seconds: 1),
@@ -59,6 +52,14 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
         }
       },
     );
+  }
+
+// Load env variables
+  Future<void> loadEnvVariables() async {
+    await dotenv.load();
+    setState(() {
+      rootUrl = dotenv.env["API_URL"];
+    });
   }
 
 // resend OTP
@@ -116,18 +117,13 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
     }
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _timer?.cancel();
-  }
-
 //combine OTP
   String combineOTP() {
     String otp = _value1.text + _value2.text + _value3.text + _value4.text;
     return otp;
   }
 
+// verify otp
   void handleVerification() async {
     setState(() {
       _isSubmitting = true;
@@ -189,6 +185,12 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
         _isSubmitting = false;
       });
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer?.cancel();
   }
 
   InputDecoration buildInputDecoration(BuildContext context) {

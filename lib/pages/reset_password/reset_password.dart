@@ -19,16 +19,16 @@ class _ResetPasswordState extends State<ResetPassword> {
   bool hidden = true;
   bool _isSubmitting = false;
 
-  void togglePasswordState() {
-    setState(() {
-      hidden = !hidden;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     hidden != hidden;
+  }
+
+  void togglePasswordState() {
+    setState(() {
+      hidden = !hidden;
+    });
   }
 
   void handleSubmit(BuildContext context) {
@@ -53,7 +53,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
-            //TODO : change image 
+            //TODO : change image
             return const SuccessAuthentication(
               avatar: "assets/images/successAvatar.png",
             );
