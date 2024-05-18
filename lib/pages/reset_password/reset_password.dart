@@ -1,14 +1,11 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:te_lead/pages/home/home_page.dart';
 import 'package:te_lead/pages/signin-signup/sign_in_page.dart';
 import 'package:te_lead/providers/user_provider.dart';
 import 'package:te_lead/utils/form_validtors.dart';
 import 'package:te_lead/widgets/Submit_button.page.dart';
-import 'package:te_lead/widgets/success_full_authentication.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:dio/dio.dart';
 
