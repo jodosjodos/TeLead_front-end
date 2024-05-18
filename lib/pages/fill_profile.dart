@@ -72,10 +72,14 @@ class _FillProfileState extends State<FillProfile> {
   }
 
   void selectImage() async {
-    Uint8List img = await pickImage(ImageSource.gallery);
-    setState(() {
-      _image = img;
-    });
+    Uint8List? img = await pickImage(ImageSource.gallery);
+    if (img != null) {
+      setState(() {
+        _image = img;
+      });
+    } else {
+      print("no image selected");
+    }
   }
 
   Future<void> loadEnvVariables() async {
