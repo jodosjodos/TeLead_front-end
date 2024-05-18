@@ -1,8 +1,16 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:te_lead/pages/home/home_page.dart';
+import 'package:te_lead/pages/signin-signup/sign_in_page.dart';
+import 'package:te_lead/providers/user_provider.dart';
 import 'package:te_lead/utils/form_validtors.dart';
 import 'package:te_lead/widgets/Submit_button.page.dart';
 import 'package:te_lead/widgets/success_full_authentication.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:dio/dio.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
@@ -18,11 +26,14 @@ class _ResetPasswordState extends State<ResetPassword> {
       TextEditingController();
   bool hidden = true;
   bool _isSubmitting = false;
+  late String rootUrl;
+  late String url;
 
   @override
   void initState() {
     super.initState();
     hidden != hidden;
+    loadEnvVariables();
   }
 
   void togglePasswordState() {
@@ -31,7 +42,18 @@ class _ResetPasswordState extends State<ResetPassword> {
     });
   }
 
-  void handleSubmit(BuildContext context) {
+// load .env
+
+  Future<void> loadEnvVariables() async {
+    await dotenv.load();
+    setState(() {
+      rootUrl = dotenv.env["API_URL"]!;
+      url = "$rootUrl/user/reset/newPasswords";
+      //  load provider user
+    });
+  }
+
+  Future<void> handleSubmit(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       setState(
         () {
@@ -48,34 +70,67 @@ class _ResetPasswordState extends State<ResetPassword> {
           ),
         );
       }
-      Future.delayed(const Duration(seconds: 3), () {
+      final Map<String, dynamic> userDetails =
+          Provider.of<UserProvider>(context, listen: false).userData;
+      final String token = userDetails["token"];
+      final Dio dio = Dio(
+        BaseOptions(
+          headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+        ),
+      );
+      try {
+        var response = await dio.patch(
+          url,
+          data: {
+            "password": _passwordController.text,
+            "confirmPassword": _passwordController.text
+          },
+        );
+        print(response.data);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            content: const Text('reset password is successfull'),
+          ),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SignInPage(),
+          ),
+        );
+      } on DioException catch (e) {
+        final error = e.response?.data;
+        final String message = error["response"]["message"].toString();
+        final String statusCode = error["statusCode"].toString();
         showDialog(
-          barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
-            //TODO : change image
-            return const SuccessAuthentication(
-              avatar: "assets/images/successAvatar.png",
+            return AlertDialog(
+              title: const Text("Fail to reset password"),
+              content: Text(
+                "$message : $statusCode",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
             );
           },
         );
-
-        // Wait for 3 seconds while showing the dialog
-        Future.delayed(const Duration(seconds: 3), () {
-          Navigator.of(context).pop(); // Dismiss the dialog
-
-          // Navigate to the HomePage
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => const HomePage(),
-            ),
-          );
-        });
-      }).whenComplete(() {
+        _isSubmitting = false;
+      } finally {
         setState(() {
           _isSubmitting = false;
         });
-      });
+      }
     }
   }
 
