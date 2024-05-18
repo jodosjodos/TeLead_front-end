@@ -88,7 +88,6 @@ class _SignInPageState extends State<SignInPage> {
           );
         }
       } on DioException catch (e) {
-        print(e);
         final error = e.response?.data;
         final String message = error["response"]["message"].toString();
         final String statusCode = error["statusCode"].toString();
