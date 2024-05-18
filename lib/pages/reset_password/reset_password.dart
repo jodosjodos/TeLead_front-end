@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:te_lead/pages/signin-signup/sign_in_page.dart';
 import 'package:te_lead/providers/user_provider.dart';
@@ -62,6 +63,9 @@ class _ResetPasswordState extends State<ResetPassword> {
           SnackBar(
             content: const Text(
               " password and confirm password doesn't match",
+              style: TextStyle(
+                color: Colors.red,
+              ),
             ),
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
@@ -80,7 +84,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           url,
           data: {
             "password": _passwordController.text,
-            "confirmPassword": _passwordController.text
+            "confirmPassword": _confirmPasswordController.text
           },
         );
         print(response.data);
