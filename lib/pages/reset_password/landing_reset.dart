@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:te_lead/pages/reset_password/otp_verification_page.dart';
+import 'package:te_lead/widgets/Submit_button.page.dart';
 
 class ResetPasswordLanding extends StatefulWidget {
   const ResetPasswordLanding({super.key});
@@ -20,8 +21,8 @@ class _ResetLanding extends State<ResetPasswordLanding> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const OTPVerificationPage(
-            value: "jeandedieu2030@gmail.com",
+          builder: (context) => OTPVerificationPage(
+            value: _emailController.text,
           ),
         ),
       );
@@ -29,8 +30,8 @@ class _ResetLanding extends State<ResetPasswordLanding> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const OTPVerificationPage(
-            value: "+250727866254",
+          builder: (context) => OTPVerificationPage(
+            value: _phoneController.text,
           ),
         ),
       );
@@ -178,7 +179,7 @@ class _ResetLanding extends State<ResetPasswordLanding> {
             const SizedBox(
               height: 50,
             ),
-    
+            SubmitButton(value: "Continue", onPress: formSubmitting)
           ],
         ),
       ),
