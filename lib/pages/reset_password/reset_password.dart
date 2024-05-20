@@ -91,7 +91,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Theme.of(context).colorScheme.primary,
-            content: const Text('reset password is successfull'),
+            content: const Text('reset password is successfully'),
           ),
         );
         Navigator.push(
