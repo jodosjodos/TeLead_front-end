@@ -80,14 +80,14 @@ class _ResetPasswordState extends State<ResetPassword> {
         ),
       );
       try {
-        var response = await dio.patch(
+        
+         await dio.patch(
           url,
           data: {
             "password": _passwordController.text,
             "confirmPassword": _confirmPasswordController.text
           },
         );
-        print(response.data);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Theme.of(context).colorScheme.primary,
@@ -108,7 +108,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text("Fail to reset password"),
+              title: const Text("Failed to reset password"),
               content: Text(
                 "$message : $statusCode",
                 style: TextStyle(
