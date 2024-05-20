@@ -80,7 +80,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         ),
       );
       try {
-        
+        // remove response variable
          await dio.patch(
           url,
           data: {
