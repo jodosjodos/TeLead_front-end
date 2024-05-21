@@ -18,8 +18,10 @@ class SuccessAuthentication extends StatelessWidget {
                 avatar,
               ),
               const SizedBox(height: 20),
-              Text("Congratulations",
-                  style: Theme.of(context).textTheme.titleLarge),
+              Text(
+                "Congratulations",
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
               const SizedBox(height: 10),
               Text(
                 "Your Account is Ready to Use. You will be redirected to the Home Page in a Few Seconds.",
