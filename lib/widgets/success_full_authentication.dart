@@ -4,7 +4,6 @@ class SuccessAuthentication extends StatelessWidget {
   const SuccessAuthentication({super.key, required this.avatar});
   final String avatar;
 
-// build
   @override
   Widget build(BuildContext context) {
     return Dialog(
