@@ -49,7 +49,7 @@ class _SignInPageState extends State<SignInPage> {
     });
   }
 
-  Future<void> _submitForm() async {
+  Future<void> _submitForm(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isSubmitting = true;
@@ -69,23 +69,25 @@ class _SignInPageState extends State<SignInPage> {
           setState(() {
             _isSubmitting = false;
           });
-          Provider.of<UserProvider>(context, listen: false).updateUser({
-            "token": response.data["token"],
-            "userId": response.data["user"]["id"],
-          });
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              content: const Text('Login successfully'),
-            ),
-          );
+          if (context.mounted) {
+            Provider.of<UserProvider>(context, listen: false).updateUser({
+              "token": response.data["token"],
+              "userId": response.data["user"]["id"],
+            });
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                content: const Text('Login successfully'),
+              ),
+            );
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HomePage(),
-            ),
-          );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomePage(),
+              ),
+            );
+          }
         }
       } on DioException catch (e) {
         final error = e.response?.data;
@@ -245,7 +247,7 @@ class _SignInPageState extends State<SignInPage> {
                   _isSubmitting
                       ? const Center(child: CircularProgressIndicator())
                       : TextButton(
-                          onPressed: _submitForm,
+                          onPressed:()=> _submitForm(context),
                           style: TextButton.styleFrom(
                             backgroundColor:
                                 Theme.of(context).colorScheme.primary,
