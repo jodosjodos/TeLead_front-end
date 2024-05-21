@@ -93,28 +93,30 @@ class _SignInPageState extends State<SignInPage> {
         final error = e.response?.data;
         final String message = error["response"]["message"].toString();
         final String statusCode = error["statusCode"].toString();
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("Fail to sign in"),
-              content: Text(
-                "$message : $statusCode",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.error,
+        if (context.mounted) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Fail to sign in"),
+                content: Text(
+                  "$message : $statusCode",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
                 ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
       } finally {
         setState(() {
           _isSubmitting = false;
@@ -247,7 +249,7 @@ class _SignInPageState extends State<SignInPage> {
                   _isSubmitting
                       ? const Center(child: CircularProgressIndicator())
                       : TextButton(
-                          onPressed:()=> _submitForm(context),
+                          onPressed: () => _submitForm(context),
                           style: TextButton.styleFrom(
                             backgroundColor:
                                 Theme.of(context).colorScheme.primary,
