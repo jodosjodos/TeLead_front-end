@@ -92,29 +92,31 @@ class _SignUpPageState extends State<SignUpPage> {
         final error = e.response?.data;
         final String message = error["response"]["message"].toString();
         final String statusCode = error["statusCode"].toString();
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("Fail to sign up"),
-              content: Text(
-                "$message : $statusCode",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.error,
+        if (context.mounted) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Fail to sign up"),
+                content: Text(
+                  "$message : $statusCode",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
                 ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-        _isSubmitting = false;
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+          _isSubmitting = false;
+        }
       } finally {
         setState(() {
           _isSubmitting = false;
