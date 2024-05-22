@@ -92,9 +92,9 @@ class _SignUpPageState extends State<SignUpPage> {
         final error = e.response?.data;
         final String message = error["response"]["message"].toString();
         final String statusCode = error["statusCode"].toString();
-        if (context.mounted) {
-          
+        if (context.mounted) { 
           showDialog(
+            
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
