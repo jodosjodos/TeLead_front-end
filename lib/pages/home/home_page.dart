@@ -18,12 +18,20 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    super.initState();
     final Map<String, dynamic> user =
         Provider.of<UserProvider>(context, listen: false).userData;
     final String token = user["token"];
     final String userId = user["userId"];
     userDetails = getUserAccountDetails(token: token, userId: userId);
-    super.initState();
+
+    userDetails.then((data) {
+      setState(() {
+        userNames = data["user"]["fullName"];
+      });
+    }).catchError((error) {
+      // Handle errors here if needed
+    });
   }
 
   @override
@@ -35,9 +43,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hi,$userNames"),
+        title: Text("Hi, $userNames"),
       ),
-      body: FutureBuilder(
+      body: FutureBuilder<Map<String, dynamic>>(
         future: userDetails,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -51,12 +59,8 @@ class _HomePageState extends State<HomePage> {
             );
           }
           final data = snapshot.data!;
-
-          setState(() {
-            userNames = data["user"]["fullName"];
-          });
           return const Center(
-            child: Text("data retrieved"),
+            child: Text("Data retrieved"),
           );
         },
       ),
